@@ -1,7 +1,5 @@
 package com.zk;
 
-import java.util.Objects;
-
 @SuppressWarnings("unchecked")
 
 /**
@@ -28,6 +26,9 @@ public class ArrayList2<E> extends AbstractList<E> {
             elements[i] = null;
         }
         size = 0;
+        if (elements != null && elements.length > DEFAULT_CAPACITY) {
+            elements = (E[]) new Object[DEFAULT_CAPACITY];
+        }
     }
 
     public E get(int index) { // O(1)
@@ -113,7 +114,7 @@ public class ArrayList2<E> extends AbstractList<E> {
         int oldCapacity = elements.length;
         int newCapacity = oldCapacity >> 1;
         if (size >= newCapacity || oldCapacity < DEFAULT_CAPACITY) return;
-        E[] newElements = (E[]) new Objects[newCapacity];
+        E[] newElements = (E[]) new Object[newCapacity];
         for (int i = 0; i < size; i++) {
             newElements[i] = elements[i];
         }

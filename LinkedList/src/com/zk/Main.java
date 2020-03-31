@@ -1,6 +1,5 @@
 package com.zk;
 
-
 import com.zk.single.SingleLinkedList;
 
 public class Main {
