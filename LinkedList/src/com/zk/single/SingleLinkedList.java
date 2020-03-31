@@ -1,6 +1,8 @@
-package com.zk;
+package com.zk.single;
 
-public class LinkedList<E> extends AbstractList<E> {
+import com.zk.AbstractList;
+
+public class SingleLinkedList<E> extends AbstractList<E> {
     private Node<E> first;
 
     private static class Node<E> {

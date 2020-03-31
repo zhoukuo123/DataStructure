@@ -1,19 +1,25 @@
 package com.zk;
 
+import java.util.Objects;
+
 @SuppressWarnings("unchecked")
-public class ArrayList<E> extends AbstractList<E> {
+
+/**
+ * 有动态缩容操作
+ */
+public class ArrayList2<E> extends AbstractList<E> {
     private E[] elements;
 
     private static final int DEFAULT_CAPACITY = 10;
 
-    public ArrayList(int capacity) {
+    public ArrayList2(int capacity) {
 
         capacity = (capacity < DEFAULT_CAPACITY) ? DEFAULT_CAPACITY : capacity;
         elements = (E[]) new Object[capacity];
 
     }
 
-    public ArrayList() {
+    public ArrayList2() {
         this(DEFAULT_CAPACITY);
     }
 
@@ -67,6 +73,8 @@ public class ArrayList<E> extends AbstractList<E> {
             elements[i - 1] = elements[i];
         }
         elements[--size] = null;
+
+        trim();
         return old;
     }
 
@@ -99,6 +107,18 @@ public class ArrayList<E> extends AbstractList<E> {
         elements = newElements;
 
         System.out.println(oldCapacity + "扩容为" + newCapacity);
+    }
+
+    private void trim() {
+        int oldCapacity = elements.length;
+        int newCapacity = oldCapacity >> 1;
+        if (size >= newCapacity || oldCapacity < DEFAULT_CAPACITY) return;
+        E[] newElements = (E[]) new Objects[newCapacity];
+        for (int i = 0; i < size; i++) {
+            newElements[i] = elements[i];
+        }
+        elements = newElements;
+        System.out.println(oldCapacity + "缩容为" + newCapacity);
     }
 
     @Override
