@@ -6,6 +6,10 @@ import com.zk.list.List;
 public class Stack<E> {
     private List<E> list =new ArrayList<>();
 
+    public void clear() {
+        list.clear();
+    }
+
     public int size() {
         return list.size();
     }
