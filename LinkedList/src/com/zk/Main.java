@@ -20,7 +20,7 @@ public class Main {
         }
     }
     public static void main(String[] args) {
-        josephus();
+        josephus(); // 约瑟夫问题
 //        List<Integer> list = new SingleLinkedList<>();
 //        list.add(20);
 //        list.add(0, 10);

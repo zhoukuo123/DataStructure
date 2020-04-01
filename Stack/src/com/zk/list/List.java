@@ -1,4 +1,4 @@
-package com.zk;
+package com.zk.list;
 
 public interface List<E> {
     static final int ELEMENT_NOT_FOUD = -1;
