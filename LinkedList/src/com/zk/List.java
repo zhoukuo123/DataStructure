@@ -1,7 +1,7 @@
 package com.zk;
 
 public interface List<E> {
-    static final int ELEMENT_NOT_FOUD = -1;
+    int ELEMENT_NOT_FOUD = -1;
     void clear();
     int size();
     boolean isEmpty();
