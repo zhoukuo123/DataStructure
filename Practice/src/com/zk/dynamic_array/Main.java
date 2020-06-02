@@ -13,6 +13,8 @@ public class Main {
         persons.add(new Person(20, "James"));
         persons.add(new Person(30, "Rose"));
         System.out.println(persons);
+        persons.clear();
+        System.gc();
 
     }
 }

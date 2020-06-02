@@ -7,7 +7,7 @@ public class ArrayList<E> {
     private E[] elements;
     private int size;
     private static final int DEFAULT_CAPACITY = 10;
-    private static final int ELEMENTS_NOT_FOUND = -1;
+    private static final int ELEMENT_NOT_FOUND = -1;
 
     public ArrayList(int capacity) {
         capacity = (capacity < DEFAULT_CAPACITY) ? DEFAULT_CAPACITY : capacity;
@@ -22,6 +22,9 @@ public class ArrayList<E> {
      * 清除所有元素
      */
     public void clear() {
+        for (int i = 0; i < size; i++) {
+            elements[i] = null;
+        }
         size = 0;
     }
 
@@ -44,7 +47,7 @@ public class ArrayList<E> {
      * @return 是否包含某个元素
      */
     public boolean contains(E element) {
-        return indexOf(element) != ELEMENTS_NOT_FOUND;
+        return indexOf(element) != ELEMENT_NOT_FOUND;
     }
 
     /**
@@ -96,11 +99,12 @@ public class ArrayList<E> {
      */
     public E remove(int index) {
         rangeCheck(index);
+
         E old = elements[index];
         for (int i = index + 1; i < size; i++) {
             elements[i - 1] = elements[i];
         }
-        size--;
+        elements[--size] = null;
         return old;
     }
 
@@ -109,10 +113,16 @@ public class ArrayList<E> {
      * @return 索引
      */
     public int indexOf(E element) {
-        for (int i = 0; i < size; i++) {
-            if (elements[i] == element) return i;
+        if (element == null) {
+            for (int i = 0; i < size; i++) {
+                if (elements[i] == null) return i;
+            }
+        } else {
+            for (int i = 0; i < size; i++) {
+                if (element.equals(elements[i])) return i;
+            }
         }
-        return ELEMENTS_NOT_FOUND;
+        return ELEMENT_NOT_FOUND;
     }
 
     @Override
