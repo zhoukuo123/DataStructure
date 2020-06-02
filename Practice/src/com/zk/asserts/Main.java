@@ -1,4 +1,4 @@
-package com.zk;
+package com.zk.asserts;
 
 public class Main {
     public static void main(String[] args) {

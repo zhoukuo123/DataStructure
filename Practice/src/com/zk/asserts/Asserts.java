@@ -1,4 +1,4 @@
-package com.zk;
+package com.zk.asserts;
 
 public class Asserts {
     public static void test(boolean v) {

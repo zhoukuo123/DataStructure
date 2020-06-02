@@ -6,7 +6,7 @@ public class ArrayList<E> {
     private E[] elements;
 
     private static final int DEFAULT_CAPACITY = 10;
-    private static final int ELEMENT_NOT_FOUD = -1;
+    private static final int ELEMENT_NOT_FOUND = -1;
 
     public ArrayList(int capacity) {
 
@@ -35,7 +35,7 @@ public class ArrayList<E> {
     }
 
     public boolean contains(E element) {
-        return indexOf(element) != ELEMENT_NOT_FOUD;
+        return indexOf(element) != ELEMENT_NOT_FOUND;
     }
 
     public void add(E element) {
@@ -93,7 +93,7 @@ public class ArrayList<E> {
                 if (element.equals(elements[i])) return i;
             }
         }
-        return ELEMENT_NOT_FOUD;
+        return ELEMENT_NOT_FOUND;
     }
 
     private void ensureCapacity(int capacity) {
