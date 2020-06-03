@@ -7,7 +7,7 @@ public interface List<E> {
 
     void add(int index, E element);
 
-    void remove(int index);
+    E remove(int index);
 
     E get(int index);
 
@@ -15,9 +15,9 @@ public interface List<E> {
 
     int indexOf(E element);
 
-    void add(E element);
-    boolean isEmpty();
     int size();
+    boolean isEmpty();
     boolean contains(E element);
+    void add(E element);
     void remove(E element);
 }

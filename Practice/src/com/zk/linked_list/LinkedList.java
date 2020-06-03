@@ -5,8 +5,8 @@ public class LinkedList<E> extends AbstractList<E> {
     private Node<E> first;
 
     private static class Node<E> {
-        private E element;
-        private Node<E> next;
+        E element;
+        Node<E> next;
         public Node(E element, Node<E> next) {
             this.element = element;
             this.next = next;
@@ -27,16 +27,21 @@ public class LinkedList<E> extends AbstractList<E> {
             Node<E> prev = node(index - 1);
             prev.next = new Node<>(element, prev.next);
         }
+        size++;
     }
 
     @Override
-    public void remove(int index) {
+    public E remove(int index) {
+        Node<E> node = first;
         if (index == 0) {
             first = first.next;
         } else {
             Node<E> prev = node(index - 1);
-            prev.next = prev.next.next;
+            node = prev.next;
+            prev.next = node.next;
         }
+        size--;
+        return node.element;
     }
 
     @Override
@@ -81,6 +86,7 @@ public class LinkedList<E> extends AbstractList<E> {
             sb.append(node.element);
             node = node.next;
         }
+        sb.append("]");
         return sb.toString();
     }
 
