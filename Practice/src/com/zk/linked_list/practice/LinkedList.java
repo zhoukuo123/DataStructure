@@ -1,4 +1,6 @@
-package com.zk.linked_list;
+package com.zk.linked_list.practice;
+
+import com.zk.linked_list.AbstractList;
 
 public class LinkedList<E> extends AbstractList<E> {
 
@@ -22,7 +24,6 @@ public class LinkedList<E> extends AbstractList<E> {
     @Override
     public void add(int index, E element) {
         rangeCheckForAdd(index);
-
         if (index == 0) {
             first = new Node<>(element, first);
         } else {
@@ -34,18 +35,16 @@ public class LinkedList<E> extends AbstractList<E> {
 
     @Override
     public E remove(int index) {
-        rangeCheck(index);
-
-        Node<E> node = first;
+        Node<E> node = node(index);
+        E old = node.element;
         if (index == 0) {
             first = first.next;
         } else {
             Node<E> prev = node(index - 1);
-            node = prev.next;
-            prev.next = node.next;
+            prev.next = prev.next.next;
         }
         size--;
-        return node.element;
+        return old;
     }
 
     @Override
@@ -78,30 +77,12 @@ public class LinkedList<E> extends AbstractList<E> {
         return ELEMENT_NOT_FOUND;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("size=").append(size).append(", [");
-        Node<E> node = first;
-        for (int i = 0; i < size; i++) {
-            if (i != 0) {
-                sb.append(", ");
-            }
-            sb.append(node.element);
-            node = node.next;
-        }
-        sb.append("]");
-        return sb.toString();
-    }
-
     private Node<E> node(int index) {
         rangeCheck(index);
-
         Node<E> node = first;
         for (int i = 0; i < index; i++) {
             node = node.next;
         }
         return node;
     }
-
 }

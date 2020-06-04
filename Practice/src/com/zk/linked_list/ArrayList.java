@@ -34,13 +34,15 @@ public class ArrayList<E> extends AbstractList<E> {
         size++;
     }
 
-    public void remove(int index) {
+    public E remove(int index) {
         rangeCheck(index);
 
+        E old = get(index);
         for (int i = index + 1; i < size; i++) {
             elements[i - 1] = elements[i];
         }
         elements[--size] = null;
+        return old;
     }
 
 
