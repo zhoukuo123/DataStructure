@@ -8,8 +8,10 @@ public class Main {
         list.add(0, 100);
         list.add(10);
         list.add(20);
+        list.remove(0);
+        list.remove(list.size() - 1);
         list.add(30);
-        System.out.println(list);
+        System.out.println(list); // size=2, [null_10_30, 10_30_null]
 
 
 

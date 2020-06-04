@@ -1,7 +1,8 @@
-package com.zk.linked_list;
+package com.zk.linked_list.practice;
+
+import com.zk.linked_list.AbstractList;
 
 public class LinkedList<E> extends AbstractList<E> {
-
     private Node<E> first;
     private Node<E> last;
 
@@ -9,6 +10,7 @@ public class LinkedList<E> extends AbstractList<E> {
         E element;
         Node<E> prev;
         Node<E> next;
+
         public Node(Node<E> prev, E element, Node<E> next) {
             this.prev = prev;
             this.element = element;
@@ -23,42 +25,43 @@ public class LinkedList<E> extends AbstractList<E> {
             } else {
                 sb.append(prev.element);
             }
+
             sb.append("_").append(element).append("_");
             if (next == null) {
                 sb.append("null");
             } else {
                 sb.append(next.element);
             }
-            return  sb.toString();
+            return sb.toString();
         }
     }
 
     @Override
     public void clear() {
+        size = 0;
         first = null;
         last = null;
-        size = 0;
     }
 
     @Override
     public void add(int index, E element) {
         rangeCheckForAdd(index);
 
-        if (index == size) { // 在最后面插入
-            Node<E> oldLast = last;
-            last = new Node<>(oldLast, element, null);
-            if (oldLast == null) { // 这是链表添加的第一个元素
-                first = last;
+        if (index == size) { // 往最后面添加
+            Node<E> current = new Node<>(last, element, null);
+            if (last == null) { // 这是链表插入的第一个元素
+                first = current;
+                last = current;
             } else {
-                oldLast.next = last;
+                last.next = current;
+                last = current;
             }
         } else {
             Node<E> next = node(index);
             Node<E> prev = next.prev;
             Node<E> current = new Node<>(prev, element, next);
             next.prev = current;
-
-            if (prev == null) {
+            if (prev == null) { // 等价于 index = 0
                 first = current;
             } else {
                 prev.next = current;
@@ -69,8 +72,6 @@ public class LinkedList<E> extends AbstractList<E> {
 
     @Override
     public E remove(int index) {
-        rangeCheck(index);
-
         Node<E> node = node(index);
         Node<E> prev = node.prev;
         Node<E> next = node.next;
@@ -86,9 +87,7 @@ public class LinkedList<E> extends AbstractList<E> {
         } else {
             next.prev = prev;
         }
-
         size--;
-
         return node.element;
     }
 
@@ -125,7 +124,7 @@ public class LinkedList<E> extends AbstractList<E> {
     private Node<E> node(int index) {
         rangeCheck(index);
 
-        if (index <= (size >> 1)) {
+        if (index < (size >> 1)) {
             Node<E> node = first;
             for (int i = 0; i < index; i++) {
                 node = node.next;
@@ -136,9 +135,6 @@ public class LinkedList<E> extends AbstractList<E> {
             for (int i = size - 1; i > index; i--) {
                 node = node.prev;
             }
-//            for (int i = 0; i < size - 1 - index; i++) {
-//                node = node.prev;
-//            }
             return node;
         }
     }
@@ -158,5 +154,4 @@ public class LinkedList<E> extends AbstractList<E> {
         sb.append("]");
         return sb.toString();
     }
-
 }
