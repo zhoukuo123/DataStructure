@@ -2,7 +2,7 @@ package com.zk.linked_list.practice;
 
 import com.zk.linked_list.AbstractList;
 
-public class LinkedList<E> extends AbstractList<E> {
+public class SingleLinkedList<E> extends AbstractList<E> {
 
     private Node<E> first;
 
@@ -84,5 +84,21 @@ public class LinkedList<E> extends AbstractList<E> {
             node = node.next;
         }
         return node;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("size=").append(size).append(", [");
+        Node<E> node = first;
+        for (int i = 0; i < size; i++) {
+            if (i != 0) {
+                sb.append(", ");
+            }
+            sb.append(node.element);
+            node = node.next;
+        }
+        sb.append("]");
+        return sb.toString();
     }
 }
