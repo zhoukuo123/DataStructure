@@ -1,9 +1,8 @@
-package com.zk.linked_list.circle;
+package com.zk.linked_list.practice;
 
 import com.zk.linked_list.AbstractList;
 
 public class CircleLinkedList<E> extends AbstractList<E> {
-
     private Node<E> first;
     private Node<E> last;
 
@@ -11,6 +10,7 @@ public class CircleLinkedList<E> extends AbstractList<E> {
         E element;
         Node<E> prev;
         Node<E> next;
+
         public Node(Node<E> prev, E element, Node<E> next) {
             this.prev = prev;
             this.element = element;
@@ -25,37 +25,39 @@ public class CircleLinkedList<E> extends AbstractList<E> {
             } else {
                 sb.append(prev.element);
             }
+
             sb.append("_").append(element).append("_");
             if (next == null) {
                 sb.append("null");
             } else {
                 sb.append(next.element);
             }
-            return  sb.toString();
+            return sb.toString();
         }
     }
 
     @Override
     public void clear() {
+        size = 0;
         first = null;
         last = null;
-        size = 0;
     }
 
     @Override
     public void add(int index, E element) {
         rangeCheckForAdd(index);
 
-        if (index == size) { // 在最后面插入
-            Node<E> oldLast = last;
-            last = new Node<>(oldLast, element, first);
-            if (oldLast == null) { // 这是链表添加的第一个元素
-                first = last;
-                first.next = first;
+        if (index == size) { // 往最后面添加
+            Node<E> current = new Node<>(last, element, first);
+            if (last == null) { // 这是链表插入的第一个元素
+                first = current;
+                last = current;
                 first.prev = first;
+                first.next = first;
             } else {
-                oldLast.next = last;
-                first.prev = last;
+                last.next = current;
+                last = current;
+                first.prev = current;
             }
         } else {
             Node<E> next = node(index);
@@ -63,7 +65,7 @@ public class CircleLinkedList<E> extends AbstractList<E> {
             Node<E> current = new Node<>(prev, element, next);
             next.prev = current;
             prev.next = current;
-            if (index == 0) {
+            if (index == 0) { // 等价于 index == 0
                 first = current;
             }
         }
@@ -72,14 +74,11 @@ public class CircleLinkedList<E> extends AbstractList<E> {
 
     @Override
     public E remove(int index) {
-        rangeCheck(index);
-
-        Node<E> node = first;
+        Node<E> node = node(index);
         if (size == 1) {
             first = null;
             last = null;
         } else {
-            node = node(index);
             Node<E> prev = node.prev;
             Node<E> next = node.next;
             prev.next = next;
@@ -93,7 +92,6 @@ public class CircleLinkedList<E> extends AbstractList<E> {
             }
         }
         size--;
-
         return node.element;
     }
 
@@ -130,7 +128,7 @@ public class CircleLinkedList<E> extends AbstractList<E> {
     private Node<E> node(int index) {
         rangeCheck(index);
 
-        if (index <= (size >> 1)) {
+        if (index < (size >> 1)) {
             Node<E> node = first;
             for (int i = 0; i < index; i++) {
                 node = node.next;
@@ -141,9 +139,6 @@ public class CircleLinkedList<E> extends AbstractList<E> {
             for (int i = size - 1; i > index; i--) {
                 node = node.prev;
             }
-//            for (int i = 0; i < size - 1 - index; i++) {
-//                node = node.prev;
-//            }
             return node;
         }
     }
@@ -163,5 +158,4 @@ public class CircleLinkedList<E> extends AbstractList<E> {
         sb.append("]");
         return sb.toString();
     }
-
 }
