@@ -8,6 +8,10 @@ public class Stack<E> {
     private List<E> list = new ArrayList<>(); // LinkedList 双向链表也可以, 没有区别, push, pop, top复杂度都是O(1)
     // private List<E> list = new LinkedList<>();
 
+    public void clear() {
+        list.clear();
+    }
+
     public int size() {
         return list.size();
     }
