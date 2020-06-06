@@ -24,6 +24,8 @@ public class CircleQueue<E> {
     }
 
     public void enQueue(E element) {
+        ensureCapacity(size + 1);
+
         elements[(front + size) % elements.length] = element;
         size++;
     }
@@ -38,5 +40,24 @@ public class CircleQueue<E> {
 
     public E front() {
         return elements[front];
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("capacity=").append(elements.length)
+                .append(" size=").append(size).append(", [");
+        for (int i = 0; i < elements.length; i++) {
+            if (i != 0) {
+                sb.append(", ");
+            }
+            sb.append(elements[i]);
+        }
+        sb.append("]");
+        return sb.toString();
+    }
+
+    private void ensureCapacity(int capacity) {
+
     }
 }
