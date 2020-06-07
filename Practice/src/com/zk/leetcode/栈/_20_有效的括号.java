@@ -63,7 +63,7 @@ public class _20_有效的括号 {
 
     public boolean isValid3(String s) {
         // (){}[]    ({[]})
-        while (s.contains("()") || s.contains("[]") || s.contains("()")) {
+        while (s.contains("()") || s.contains("[]") || s.contains("{}")) {
             s = s.replace("()", "");
             s = s.replace("{}", "");
             s = s.replace("[]", "");

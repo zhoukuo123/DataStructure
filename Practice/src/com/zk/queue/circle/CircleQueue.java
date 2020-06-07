@@ -26,14 +26,14 @@ public class CircleQueue<E> {
     public void enQueue(E element) {
         ensureCapacity(size + 1);
 
-        elements[(front + size) % elements.length] = element;
+        elements[index(size)] = element;
         size++;
     }
 
     public E deQueue() {
         E deQueueElement = elements[front];
         elements[front] = null;
-        front = (front + 1) % elements.length;
+        front = index(1);
         size--;
         return deQueueElement;
     }
@@ -58,6 +58,20 @@ public class CircleQueue<E> {
     }
 
     private void ensureCapacity(int capacity) {
+        int oldCapacity = elements.length;
+        if (oldCapacity >= capacity) return;
 
+        int newCapacity = oldCapacity + (oldCapacity >> 1);
+        E[] newElements = (E[]) new Object[newCapacity];
+        for (int i = 0; i < size; i++) {
+            newElements[i] = elements[index(i)];
+        }
+        elements = newElements;
+        // 注意: 要重置front
+        front = 0;
+    }
+
+    private int index(int index) {
+        return (front + index) % elements.length;
     }
 }
