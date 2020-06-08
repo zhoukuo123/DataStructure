@@ -1,5 +1,7 @@
 package com.zk.queue.circle;
 
+import java.net.IDN;
+
 /**
  * 其实队列底层也可以使用动态数组实现,并且各项接口也可以优化到 O(1) 的时间复杂度
  * 这个用数组实现并且优化之后的队列也叫做:循环队列
@@ -21,6 +23,14 @@ public class CircleQueue<E> {
 
     public boolean isEmpty() {
         return size == 0;
+    }
+
+    public void clear() {
+        for (int i = 0; i < size; i++) {
+            elements[index(i)] = null;
+        }
+        size = 0;
+        front = 0;
     }
 
     public void enQueue(E element) {
@@ -72,6 +82,7 @@ public class CircleQueue<E> {
     }
 
     private int index(int index) {
-        return (front + index) % elements.length;
+        index += front;
+        return index - (index >= elements.length ? elements.length : 0);
     }
 }
