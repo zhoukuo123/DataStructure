@@ -1,8 +1,19 @@
 package com.zk;
 
-public class BinarySearchTree<E> {
+import java.util.Comparator;
+
+public class BinarySearchTree<E extends Comparable<E>> {
     private int size;
     private Node<E> root;
+    private Comparator<E> comparator;
+
+    public BinarySearchTree(Comparator<E> comparator) {
+        this.comparator = comparator;
+    }
+
+    public BinarySearchTree() {
+        this(null);
+    }
 
     public int size() {
         return size;
@@ -65,7 +76,11 @@ public class BinarySearchTree<E> {
      * @return 返回值等于0, 代表e1和e2相等;返回值大于0, 代表e1大于e2;返回值小于0, 代表e1小于e2
      */
     private int compare(E e1, E e2) {
-        return 0;
+        if (comparator != null) {
+            return compare(e1, e2);
+        }
+
+        return e1.compareTo(e2);
     }
 
     private void elementNotNullCheck(E element) {
