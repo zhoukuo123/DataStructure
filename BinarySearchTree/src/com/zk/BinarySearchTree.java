@@ -2,7 +2,8 @@ package com.zk;
 
 import java.util.Comparator;
 
-public class BinarySearchTree<E extends Comparable<E>> {
+@SuppressWarnings("unchecked")
+public class BinarySearchTree<E> {
     private int size;
     private Node<E> root;
     private Comparator<E> comparator;
@@ -38,7 +39,7 @@ public class BinarySearchTree<E extends Comparable<E>> {
         }
 
         // 添加的不是第一个节点
-        // 找到父节点
+        // 找到要插入的元素的父节点parent
         Node<E> parent = root;
         Node<E> node = root;
         int cmp = 0;
@@ -50,6 +51,7 @@ public class BinarySearchTree<E extends Comparable<E>> {
             } else if (cmp < 0) {
                 node = node.left;
             } else { // 相等
+                node.element = element; // 覆盖更合理
                 return;
             }
         }
@@ -73,14 +75,59 @@ public class BinarySearchTree<E extends Comparable<E>> {
     }
 
     /**
+     * 前序遍历
+     */
+    public void preorderTraversal() {
+        preorderTraversal(root);
+    }
+
+    private void preorderTraversal(Node<E> node) {
+        if (node == null) return;
+
+        System.out.println(node.element);
+        preorderTraversal(node.left);
+        preorderTraversal(node.right);
+    }
+
+    /**
+     * 中序遍历
+     */
+    public void inorderTraversal() {
+        inorderTraversal(root);
+    }
+
+    private void inorderTraversal(Node<E> node) {
+        if (node == null) return;
+
+        inorderTraversal(node.left);
+        System.out.println(node.element);
+        inorderTraversal(node.right);
+    }
+
+    /**
+     * 后序遍历
+     */
+    public void postorderTraversal() {
+        postorderTraversal(root);
+    }
+
+    public void postorderTraversal(Node<E> node) {
+        if (node == null) return;
+
+        postorderTraversal(node.left);
+        postorderTraversal(node.right);
+        System.out.println(node.element);
+    }
+
+    /**
      * @return 返回值等于0, 代表e1和e2相等;返回值大于0, 代表e1大于e2;返回值小于0, 代表e1小于e2
      */
     private int compare(E e1, E e2) {
         if (comparator != null) {
-            return compare(e1, e2);
+            return comparator.compare(e1, e2);
         }
 
-        return e1.compareTo(e2);
+        return ((Comparable<E>)e1).compareTo(e2);
     }
 
     private void elementNotNullCheck(E element) {
