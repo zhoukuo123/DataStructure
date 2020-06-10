@@ -1,6 +1,8 @@
 package com.zk;
 
 import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.Queue;
 
 @SuppressWarnings("unchecked")
 public class BinarySearchTree<E> {
@@ -120,6 +122,49 @@ public class BinarySearchTree<E> {
     }
 
     /**
+     * 层序遍历
+     */
+    public void levelOrderTraversal() {
+        if (root == null) return;
+
+        Queue<Node<E>> queue = new LinkedList<>();
+        queue.offer(root);
+
+        while (!queue.isEmpty()) {
+            Node<E> node = queue.poll();
+            System.out.println(node.element);
+
+            if (node.left != null) {
+                queue.offer(node.left);
+            }
+
+            if (node.right != null) {
+                queue.offer(node.right);
+            }
+        }
+    }
+
+    public void levelOrder(Visitor<E> visitor) {
+        if (root == null) return;
+
+        Queue<Node<E>> queue = new LinkedList<>();
+        queue.offer(root);
+
+        while (!queue.isEmpty()) {
+            Node<E> node = queue.poll();
+            visitor.visit(node.element);
+
+            if (node.left != null) {
+                queue.offer(node.left);
+            }
+
+            if (node.right != null) {
+                queue.offer(node.right);
+            }
+        }
+    }
+
+    /**
      * @return 返回值等于0, 代表e1和e2相等;返回值大于0, 代表e1大于e2;返回值小于0, 代表e1小于e2
      */
     private int compare(E e1, E e2) {
@@ -134,6 +179,10 @@ public class BinarySearchTree<E> {
         if (element == null) {
             throw new IllegalArgumentException("element must not be null");
         }
+    }
+
+    public static interface Visitor<E> {
+        void visit(E element);
     }
 
     private static class Node<E> {
