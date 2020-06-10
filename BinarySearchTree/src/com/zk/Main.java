@@ -4,7 +4,6 @@ import java.util.Comparator;
 import com.zk.BinarySearchTree.Visitor;
 
 public class Main {
-
     static void test1() {
         Integer[] data = new Integer[] {
                 7, 4, 9, 2, 5, 8, 11, 3
@@ -27,20 +26,24 @@ public class Main {
         bst3.add(new Person(22));
     }
 
-    public static class Abc<E> implements Visitor<E> {
+    public static class Abc<E> extends Visitor<E> {
 
         @Override
-        public void visit(E element) {
+        public boolean visit(E element) {
             System.out.println(element);
+            return false;
         }
     }
 
-    public static void main(String[] args) {
+    static int count = 0;
+    static void test2() {
         BinarySearchTree<Integer> bst = new BinarySearchTree<>();
         bst.levelOrder(new Visitor<Integer>() {
             @Override
-            public void visit(Integer element) {
+            public boolean visit(Integer element) {
+                count++;
                 System.out.println("_" + element + "_ ");
+                return count == 3;
             }
         });
 
@@ -52,6 +55,28 @@ public class Main {
         });
 
         bst2.levelOrder(new Abc<Integer>());
+    }
+
+    static void test3() {
+        BinarySearchTree<Integer> bst = new BinarySearchTree<>();
+        Integer[] data = new Integer[] {
+                7, 4, 9, 2, 5, 8, 11, 1, 3, 10, 12
+        };
+        for (int i = 0; i < data.length; i++) {
+            bst.add(data[i]);
+        }
+        bst.postorder(new Visitor<Integer>() {
+            @Override
+            public boolean visit(Integer element) {
+                count++;
+                System.out.print(element + " ");
+                return count == 3;
+            }
+        });
+    }
+
+    public static void main(String[] args) {
+        test3();
 
 
     }

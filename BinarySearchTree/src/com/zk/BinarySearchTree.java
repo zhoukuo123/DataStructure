@@ -76,83 +76,125 @@ public class BinarySearchTree<E> {
         return false;
     }
 
-    /**
-     * 前序遍历
-     */
-    public void preorderTraversal() {
-        preorderTraversal(root);
+//    /**
+//     * 前序遍历
+//     */
+//    public void preorderTraversal() {
+//        preorderTraversal(root);
+//    }
+//
+//    private void preorderTraversal(Node<E> node) {
+//        if (node == null) return;
+//
+//        System.out.println(node.element);
+//        preorderTraversal(node.left);
+//        preorderTraversal(node.right);
+//    }
+//
+//    /**
+//     * 中序遍历
+//     */
+//    public void inorderTraversal() {
+//        inorderTraversal(root);
+//    }
+//
+//    private void inorderTraversal(Node<E> node) {
+//        if (node == null) return;
+//
+//        inorderTraversal(node.left);
+//        System.out.println(node.element);
+//        inorderTraversal(node.right);
+//    }
+//
+//    /**
+//     * 后序遍历
+//     */
+//    public void postorderTraversal() {
+//        postorderTraversal(root);
+//    }
+//
+//    public void postorderTraversal(Node<E> node) {
+//        if (node == null) return;
+//
+//        postorderTraversal(node.left);
+//        postorderTraversal(node.right);
+//        System.out.println(node.element);
+//    }
+//
+//    /**
+//     * 层序遍历
+//     */
+//    public void levelOrderTraversal() {
+//        if (root == null) return;
+//
+//        Queue<Node<E>> queue = new LinkedList<>();
+//        queue.offer(root);
+//
+//        while (!queue.isEmpty()) {
+//            Node<E> node = queue.poll();
+//            System.out.println(node.element);
+//
+//            if (node.left != null) {
+//                queue.offer(node.left);
+//            }
+//
+//            if (node.right != null) {
+//                queue.offer(node.right);
+//            }
+//        }
+//    }
+
+    public void preorder(Visitor<E> visitor) {
+        if (visitor == null) return;
+        preorder(root, visitor);
     }
 
-    private void preorderTraversal(Node<E> node) {
-        if (node == null) return;
+    private void preorder(Node<E> node, Visitor<E> visitor) {
+        if (node == null || visitor.stop) return;
 
-        System.out.println(node.element);
-        preorderTraversal(node.left);
-        preorderTraversal(node.right);
+        visitor.visit(node.element);
+        preorder(node.left, visitor);
+        preorder(node.right, visitor);
     }
 
-    /**
-     * 中序遍历
-     */
-    public void inorderTraversal() {
-        inorderTraversal(root);
+    public void inorder(Visitor<E> visitor) {
+        if (visitor == null) return;
+        inorder(root, visitor);
     }
 
-    private void inorderTraversal(Node<E> node) {
-        if (node == null) return;
+    private void inorder(Node<E> node, Visitor<E> visitor) {
+        if (node == null || visitor.stop) return;
 
-        inorderTraversal(node.left);
-        System.out.println(node.element);
-        inorderTraversal(node.right);
+        inorder(node.left, visitor);
+        if (visitor.stop) return;
+        visitor.visit(node.element);
+        inorder(node.right, visitor);
     }
 
-    /**
-     * 后序遍历
-     */
-    public void postorderTraversal() {
-        postorderTraversal(root);
+    public void postorder(Visitor<E> visitor) {
+        if (visitor == null) return;
+        postorder(root, visitor);
     }
 
-    public void postorderTraversal(Node<E> node) {
-        if (node == null) return;
+    private void postorder(Node<E> node, Visitor<E> visitor) {
+        if (node == null || visitor.stop) return; // 递归调用的终止
 
-        postorderTraversal(node.left);
-        postorderTraversal(node.right);
-        System.out.println(node.element);
-    }
+        postorder(node.left, visitor);
+        postorder(node.right, visitor);
 
-    /**
-     * 层序遍历
-     */
-    public void levelOrderTraversal() {
-        if (root == null) return;
-
-        Queue<Node<E>> queue = new LinkedList<>();
-        queue.offer(root);
-
-        while (!queue.isEmpty()) {
-            Node<E> node = queue.poll();
-            System.out.println(node.element);
-
-            if (node.left != null) {
-                queue.offer(node.left);
-            }
-
-            if (node.right != null) {
-                queue.offer(node.right);
-            }
-        }
+        if (visitor.stop) return; // 防止left或者right是true
+        visitor.stop = visitor.visit(node.element);
     }
 
     public void levelOrder(Visitor<E> visitor) {
-        if (root == null) return;
+        if (root == null || visitor == null) return;
 
         Queue<Node<E>> queue = new LinkedList<>();
         queue.offer(root);
 
         while (!queue.isEmpty()) {
             Node<E> node = queue.poll();
-            visitor.visit(node.element);
+            if (visitor.visit(node.element)) return;
 
             if (node.left != null) {
                 queue.offer(node.left);
@@ -181,8 +223,14 @@ public class BinarySearchTree<E> {
         }
     }
 
-    public static interface Visitor<E> {
-        void visit(E element);
+    public static abstract class Visitor<E> {
+        boolean stop;
+        /**
+         * 外界自定义访问逻辑
+         * @param element 节点上的元素
+         * @return true 代表停止访问
+         */
+        abstract boolean visit(E element);
     }
 
     private static class Node<E> {
