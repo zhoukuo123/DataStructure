@@ -206,6 +206,112 @@ public class BinarySearchTree<E> {
         }
     }
 
+    public boolean isComplete() {
+        if (root == null) return false;
+
+        Queue<Node<E>> queue = new LinkedList<>();
+        queue.offer(root);
+        boolean leaf = false;
+
+        while (!queue.isEmpty()) {
+            Node<E> node = queue.poll();
+            if (leaf && !node.isLeaf()) return false;
+
+            if (node.left != null) {
+                queue.offer(node.left);
+            } else if (node.right != null) { // node.left == null && node.right != null
+                return false;
+            }
+
+            if (node.right != null) {
+                queue.offer(node.right);
+            } else { // node.right == null
+                leaf = true;
+            }
+        }
+
+        return true;
+    }
+
+//    public boolean isComplete() {
+//        if (root == null) return false;
+//
+//        Queue<Node<E>> queue = new LinkedList<>();
+//        queue.offer(root);
+//
+//        boolean leaf = false;
+//        while (!queue.isEmpty()) {
+//            Node<E> node = queue.poll();
+//            if (leaf && !node.isLeaf()) return false;
+//
+//            if (node.hasTwoChildren()) {
+//                queue.offer(node.left);
+//                queue.offer(node.right);
+//            } else if (node.left == null && node.right != null) {
+//                return false;
+//            } else { // 后面遍历的节点都必须是叶子节点
+//                leaf = true;
+//                if (node.left != null) {
+//                    queue.offer(node.left);
+//                }
+//            }
+//        }
+//
+//        return true;
+//    }
+
+    public int height() {
+        if (root == null) return 0;
+
+        Queue<Node<E>> queue = new LinkedList<>();
+        queue.offer(root);
+
+        int height = 0;
+        // 存储着每一层的元素数量
+        int levelSize = 1;
+
+        while (!queue.isEmpty()) {
+            Node<E> node = queue.poll();
+            levelSize--;
+
+            if (node.left != null) {
+                queue.offer(node.left);
+            }
+            if (node.right != null) {
+                queue.offer(node.right);
+            }
+            if (levelSize == 0) { // 这一层访问完了
+                levelSize = queue.size(); // 下一层元素的数量
+                height++;
+            }
+        }
+        return height;
+    }
+
+    public int height2() {
+        return height(root);
+    }
+
+    private int height(Node<E> node) {
+        if (node == null) return 0;
+        return 1 + Math.max(height(node.left), height(node.right));
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        toString(root, sb, "");
+        return sb.toString();
+    }
+
+    private void toString(Node<E> node, StringBuilder sb, String prefix) {
+        if (node == null) return;
+
+        sb.append(prefix).append(node.element).append("\n");
+        toString(node.left, sb, prefix + "L---");
+        toString(node.right, sb, prefix + "R---");
+    }
+
     /**
      * @return 返回值等于0, 代表e1和e2相等;返回值大于0, 代表e1大于e2;返回值小于0, 代表e1小于e2
      */
@@ -241,6 +347,14 @@ public class BinarySearchTree<E> {
         public Node(E element, Node<E> parent) {
             this.element = element;
             this.parent = parent;
+        }
+
+        public boolean isLeaf() {
+            return left == null && right == null;
+        }
+
+        public boolean hasTwoChildren() {
+            return left != null && right != null;
         }
     }
 }

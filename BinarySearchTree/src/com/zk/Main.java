@@ -75,8 +75,19 @@ public class Main {
         });
     }
 
+    static void test4() {
+        BinarySearchTree<Integer> bst = new BinarySearchTree<>();
+        Integer[] data = new Integer[] {
+                7, 4, 9, 2, 5, 8, 11, 1, 3, 10, 12
+        };
+        for (int i = 0; i < data.length; i++) {
+            bst.add(data[i]);
+        }
+        System.out.println(bst.height());
+    }
+
     public static void main(String[] args) {
-        test3();
+        test4();
 
 
     }
