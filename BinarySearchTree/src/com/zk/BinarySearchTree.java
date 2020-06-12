@@ -152,7 +152,7 @@ public class BinarySearchTree<E> {
     private void preorder(Node<E> node, Visitor<E> visitor) {
         if (node == null || visitor.stop) return;
 
-        visitor.visit(node.element);
+        visitor.stop = visitor.visit(node.element);
         preorder(node.left, visitor);
         preorder(node.right, visitor);
     }
@@ -167,7 +167,7 @@ public class BinarySearchTree<E> {
 
         inorder(node.left, visitor);
         if (visitor.stop) return;
-        visitor.visit(node.element);
+        visitor.stop = visitor.visit(node.element);
         inorder(node.right, visitor);
     }
 
@@ -327,6 +327,50 @@ public class BinarySearchTree<E> {
         if (element == null) {
             throw new IllegalArgumentException("element must not be null");
         }
+    }
+
+    private Node<E> predecessor(Node<E> node) {
+        if (node == null) return null;
+
+        // 前驱节点在左子树当中 (left.right.right.right...)
+        Node<E> p = node.left;
+        if (p != null) {
+            while (p.right != null) {
+                p = p.right;
+            }
+            return p;
+        }
+
+        // 从父节点和祖父节点中寻找前驱节点
+        while (node.parent != null && node == node.parent.left) {
+            node = node.parent;
+        }
+
+        // node.parent == null 没有前驱节点
+        // node == node.parent.right 前驱节点是node.parent
+        return node.parent;
+    }
+
+    private Node<E> successor(Node<E> node) {
+        if (node == null) return null;
+
+        // 后继节点在右子树当中 (right.left.left.left...)
+        Node<E> s = node.right;
+        if (s != null) {
+            while (s.left != null) {
+                s = s.left;
+            }
+            return s;
+        }
+
+        // 从父节点和祖父节点中寻找后继节点
+        while (node.parent != null && node == node.parent.right) {
+            node = node.parent;
+        }
+
+        // node.parent == null 没有后继节点
+        // node == node.parent.left 后继节点是node.parent
+        return node.parent;
     }
 
     public static abstract class Visitor<E> {
