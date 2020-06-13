@@ -79,9 +79,9 @@ public class BinarySearchTree<E> {
         size--;
 
         if (node.hasTwoChildren()) { // 度为2的节点
-            // 找到后继节点
+            // 找到后继节点 (或前驱)
             Node<E> s = successor(node);
-            // 用后继节点的值覆盖
+            // 用后继(或前驱)节点的值覆盖度为2的节点的值
             node.element = s.element;
             // 删除后继节点
             node = s;
@@ -89,20 +89,24 @@ public class BinarySearchTree<E> {
 
         // 删除node节点 (node的度必然是1或者0)
         Node<E> replacement = node.left != null ? node.left : node.right;
-        if (root == node) { // node是根节点
-            root = replacement;
-        }
-        if (replacement != null) { // node的度为1
+
+        if (replacement != null) { // node是度为1的节点
+            // 更改parent
             replacement.parent = node.parent;
-            if (compare(node.element, node.parent.left.element) == 0) {
+            // 更改parent的left, right的指向
+            if (node.parent == null) { // node是度为1的节点并且是根节点
+                root = replacement;
+            } else if (node == node.parent.left) {
                 node.parent.left = replacement;
-            } else {
+            } else { // node == node.parent.right
                 node.parent.right = replacement;
             }
-        } else { // node的度为0
+        } else if (node.parent == null) { // node是叶子节点并且是根节点
+            root = null;
+        } else { // node是叶子节点, 但不是根节点
             if (node == node.parent.left) {
                 node.parent.left = null;
-            } else {
+            } else { // node = node.parent.right
                 node.parent.right = null;
             }
         }
