@@ -56,10 +56,10 @@ public class ArrayList<E> extends AbstractList<E> {
     }
 
     public E remove(int index) {
-        /**
-         * 最好: O(1)
-         * 最坏: O(n)
-         * 平均: O(n)
+        /*
+          最好: O(1)
+          最坏: O(n)
+          平均: O(n)
          */
         rangeCheck(index);
         E old = elements[index];
