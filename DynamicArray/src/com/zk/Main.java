@@ -1,17 +1,32 @@
 package com.zk;
 
+import java.util.ArrayList;
+
 public class Main {
 
     public static void main(String[] args) {
-        ArrayList<Object> persons = new ArrayList<>();
-        persons.add(null);
-        persons.add(null);
-        persons.add(new Person(15, "Rose"));
-        persons.add(null);
-        persons.add(new Person(12, "James"));
-        persons.add(null);
 
-        System.out.println(persons.indexOf(null));
+
+//        List<Integer> list = new ArrayList<>();
+//        list.add(11);
+//        list.add(12);
+//        list.add(13);
+//        list.add(14);
+//        for (Integer integer : list) {
+//            list.remove(3);
+//            System.out.println(integer);
+//        }
+//
+
+//        ArrayList<Object> persons = new ArrayList<>();
+//        persons.add(null);
+//        persons.add(null);
+//        persons.add(new Person(15, "Rose"));
+//        persons.add(null);
+//        persons.add(new Person(12, "James"));
+//        persons.add(null);
+//
+//        System.out.println(persons.indexOf(null));
     }
 
     static void test() {

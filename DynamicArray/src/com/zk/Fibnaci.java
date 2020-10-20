@@ -1,5 +1,9 @@
 package com.zk;
 
+/**
+ * 0 1 2 3 4 5 6 7
+ * 0 1 1 2 3 5 8 13 ....
+ */
 public class Fibnaci {
     public int fib(int N) {
         if (N <= 1) return N;

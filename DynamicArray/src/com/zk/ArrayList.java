@@ -72,14 +72,14 @@ public class ArrayList<E> {
         rangeCheck(index);
 
         E old = elements[index];
-        for (int i = index + 1; i <= size -1; i++) {
+        for (int i = index + 1; i <= size - 1; i++) {
             elements[i - 1] = elements[i];
         }
         elements[--size] = null;
         return old;
     }
 
-    public void remove (E element) {
+    public void remove(E element) {
         remove(indexOf(element));
     }
 
