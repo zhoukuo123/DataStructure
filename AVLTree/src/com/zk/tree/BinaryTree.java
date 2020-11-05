@@ -146,6 +146,10 @@ public class BinaryTree<E> {
         return 1 + Math.max(height(node.left), height(node.right));
     }
 
+    protected Node<E> createNode(E element, Node<E> parent) {
+        return new Node<>(element, parent);
+    }
+
     protected Node<E> predecessor(Node<E> node) {
         if (node == null) return null;
 
@@ -216,6 +220,14 @@ public class BinaryTree<E> {
 
         public boolean hasTwoChildren() {
             return left != null && right != null;
+        }
+
+        public boolean isLeftChild() {
+            return parent != null && this == parent.left;
+        }
+
+        public boolean isRightChild() {
+            return parent != null && this == parent.right;
         }
     }
 }
