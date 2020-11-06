@@ -1,4 +1,4 @@
-package com.zk;
+package zk;
 
 import com.zk.tree.AVLTree;
 import com.zk.tree.BST;
