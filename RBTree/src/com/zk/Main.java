@@ -1,8 +1,8 @@
-package zk;
+package com.zk;
 
 import com.zk.tree.AVLTree;
 import com.zk.tree.BST;
-import zk.tree.RBTree;
+import com.zk.tree.RBTree;
 
 import java.util.ArrayList;
 import java.util.List;
