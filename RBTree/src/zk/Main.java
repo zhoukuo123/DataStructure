@@ -60,7 +60,6 @@ public class Main {
             System.out.println(rb);
             System.out.println("------------------");
         }
-
     }
 
     public static void main(String[] args) {
