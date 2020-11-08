@@ -83,6 +83,9 @@ public class ArrayList<E> {
         remove(indexOf(element));
     }
 
+    /**
+     * 查看元素的索引
+     */
     public int indexOf(E element) {
         if (element == null) {
             for (int i = 0; i < size; i++) {
@@ -95,6 +98,17 @@ public class ArrayList<E> {
         }
         return ELEMENT_NOT_FOUND;
     }
+
+//    public int indexOf2(E element) {
+//        for (int i = 0; i < size; i++) {
+//            if (valEquals(element, elements[i])) return i;
+//        }
+//        return ELEMENT_NOT_FOUND;
+//    }
+//
+//    private boolean valEquals(Object v1, Object v2) {
+//        return v1 == null ? v2 == null : v1.equals(v2);
+//    }
 
     private void ensureCapacity(int capacity) {
         int oldCapacity = elements.length;

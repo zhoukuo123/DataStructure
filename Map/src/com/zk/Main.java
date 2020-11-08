@@ -4,6 +4,8 @@ import com.zk.file.FileInfo;
 import com.zk.file.Files;
 import com.zk.map.Map;
 import com.zk.map.TreeMap;
+import com.zk.set.Set;
+import com.zk.set.TreeSet;
 
 public class Main {
 
@@ -48,7 +50,24 @@ public class Main {
         });
     }
 
+    static void test3() {
+        Set<String> set = new TreeSet<>();
+        set.add("c");
+        set.add("b");
+        set.add("c");
+        set.add("c");
+        set.add("a");
+
+        set.traversal(new Set.Visitor<String>() {
+            @Override
+            public boolean visit(String element) {
+                System.out.println(element);
+                return false;
+            }
+        });
+    }
+
     public static void main(String[] args) {
-        test2();
+        test3();
     }
 }
