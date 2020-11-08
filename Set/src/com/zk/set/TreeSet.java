@@ -3,8 +3,18 @@ package com.zk.set;
 import com.zk.tree.BinaryTree;
 import com.zk.tree.RBTree;
 
+import java.util.Comparator;
+
 public class TreeSet<E> implements Set<E> {
-    private final RBTree<E> tree = new RBTree<>();
+    private final RBTree<E> tree;
+
+    public TreeSet() {
+        this(null);
+    }
+
+    public TreeSet(Comparator<E> comparator) {
+        tree = new RBTree<>(comparator);
+    }
 
     @Override
     public int size() {
