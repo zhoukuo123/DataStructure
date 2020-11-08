@@ -4,7 +4,7 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.Queue;
 
-@SuppressWarnings("unchecked")
+@SuppressWarnings({"unchecked", "unused"})
 public class TreeMap<K, V> implements Map<K, V> {
     private static final boolean RED = false;
     private static final boolean BLACK = true;
@@ -110,7 +110,17 @@ public class TreeMap<K, V> implements Map<K, V> {
         while (!queue.isEmpty()) {
             Node<K, V> node = queue.poll();
 
-            if (node.value.equals())
+            if (valEquals(value, node.value)) {
+                return true;
+            }
+
+            if (node.left != null) {
+                queue.offer(node.left);
+            }
+
+            if (node.right != null) {
+                queue.offer(node.right);
+            }
         }
 
         return false;
@@ -118,7 +128,17 @@ public class TreeMap<K, V> implements Map<K, V> {
 
     @Override
     public void traversal(Visitor<K, V> visitor) {
+        if (visitor == null) return;
+        traversal(root, visitor);
+    }
 
+    private void traversal(Node<K, V> node, Visitor<K, V> visitor) {
+        if (node == null || visitor.stop) return;
+
+        traversal(node.left, visitor);
+        if (visitor.stop) return;
+        visitor.visit(node.key, node.value);
+        traversal(node.right, visitor);
     }
 
     private boolean valEquals(V v1, V v2) {
