@@ -26,6 +26,7 @@ public class Main {
         System.out.println(c.hashCode());
         System.out.println(d.hashCode());
         System.out.println(e.hashCode());
+
     }
 
     static void test3() {
@@ -34,6 +35,9 @@ public class Main {
 
     public static void main(String[] args) {
         Person p1 = new Person(10, 1.67f, "jack");
+        Person p2 = new Person(10, 1.67f, "jack");
         System.out.println(p1.hashCode());
+        System.out.println(p2.hashCode());
+
     }
 }
