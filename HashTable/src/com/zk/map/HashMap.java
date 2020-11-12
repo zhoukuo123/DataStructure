@@ -1,6 +1,8 @@
 package com.zk.map;
 
+import java.util.LinkedList;
 import java.util.Objects;
+import java.util.Queue;
 
 @SuppressWarnings({"unchecked", "rawtypes"})
 public class HashMap<K, V> implements Map<K, V> {
@@ -88,26 +90,145 @@ public class HashMap<K, V> implements Map<K, V> {
 
     @Override
     public V remove(K key) {
-        return null;
+        return remove(node(key));
     }
 
     @Override
     public boolean containsKey(K key) {
-        return false;
+        return node(key) != null;
     }
 
     @Override
     public boolean containsValue(V value) {
+        if (size == 0) return false;
+        Queue<Node<K, V>> queue = new LinkedList<>();
+        for (int i = 0; i < table.length; i++) {
+            if (table[i] == null) continue;
+
+            queue.offer(table[i]);
+            while (!queue.isEmpty()) {
+                Node<K, V> node = queue.poll();
+                if (Objects.equals(value, node.value)) return true;
+
+                if (node.left != null) {
+                    queue.offer(node.left);
+                }
+                if (node.right != null) {
+                    queue.offer(node.right);
+                }
+            }
+        }
         return false;
     }
 
     @Override
     public void traversal(Visitor<K, V> visitor) {
+        if (size == 0 || visitor == null) return;
+        Queue<Node<K, V>> queue = new LinkedList<>();
+        for (int i = 0; i < table.length; i++) {
+            if (table[i] == null) continue;
 
+            queue.offer(table[i]);
+            while (!queue.isEmpty()) {
+                Node<K, V> node = queue.poll();
+                if (visitor.visit(node.key, node.value)) return;
+
+                if (node.left != null) {
+                    queue.offer(node.left);
+                }
+                if (node.right != null) {
+                    queue.offer(node.right);
+                }
+            }
+        }
+    }
+
+    private V remove(Node<K, V> node) {
+        if (node == null) return null;
+
+        size--;
+
+        V oldValue = node.value;
+
+        if (node.hasTwoChildren()) { // 度为2的节点
+            // 找到后继节点 (或前驱)
+            Node<K, V> s = successor(node);
+            // 用后继(或前驱)节点的值覆盖度为2的节点的值
+            node.key = s.key;
+            node.value = s.value;
+            // 删除后继节点
+            node = s;
+        }
+
+        // 删除node节点 (node的度必然是1或者0)
+        Node<K, V> replacement = node.left != null ? node.left : node.right;
+        int index = index(node);
+
+        if (replacement != null) { // node是度为1的节点
+            // 更改parent
+            replacement.parent = node.parent;
+            // 更改parent的left, right的指向
+            if (node.parent == null) { // node是度为1的节点并且是根节点
+                table[index] = replacement;
+            } else if (node == node.parent.left) {
+                node.parent.left = replacement;
+            } else { // node == node.parent.right
+                node.parent.right = replacement;
+            }
+
+            // 删除节点之后的处理
+            afterRemove(replacement);
+        } else if (node.parent == null) { // node是叶子节点并且是根节点
+            table[index] = null;
+        } else { // node是叶子节点, 但不是根节点
+            if (node == node.parent.left) {
+                node.parent.left = null;
+            } else { // node = node.parent.right
+                node.parent.right = null;
+            }
+
+            // 删除节点之后的处理
+            afterRemove(node);
+        }
+
+        return oldValue;
+    }
+
+    private Node<K, V> successor(Node<K, V> node) {
+        if (node == null) return null;
+
+        // 后继节点在右子树当中 (right.left.left.left...)
+        Node<K, V> s = node.right;
+        if (s != null) {
+            while (s.left != null) {
+                s = s.left;
+            }
+            return s;
+        }
+
+        // 从父节点和祖父节点中寻找后继节点
+        while (node.parent != null && node == node.parent.right) {
+            node = node.parent;
+        }
+
+        // node.parent == null 没有后继节点
+        // node == node.parent.left 后继节点是node.parent
+        return node.parent;
     }
 
     private Node<K, V> node(K key) {
-
+        Node<K, V> node = table[index(key)];
+        int h1 = key == null ? 0 : key.hashCode();
+        while (node != null) {
+            int cmp = compare(key, node.key, h1, node.hash);
+            if (cmp == 0) return node;
+            if (cmp > 0) {
+                node = node.right;
+            } else {
+                node = node.left;
+            }
+        }
+        return null;
     }
 
     /**

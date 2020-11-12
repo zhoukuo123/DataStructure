@@ -1,4 +1,4 @@
-package com.zk;
+package com.zk.model;
 
 public class Person {
     private int age;

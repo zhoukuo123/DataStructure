@@ -2,6 +2,8 @@ package com.zk;
 
 import com.zk.map.HashMap;
 import com.zk.map.Map;
+import com.zk.model.Key;
+import com.zk.model.Person;
 
 public class Main {
     static void test1() {
@@ -45,17 +47,84 @@ public class Main {
         System.out.println(map.size());
     }
 
-    public static void main(String[] args) {
+    static void test4() {
         Person p1 = new Person(10, 1.67f, "jack");
         Person p2 = new Person(10, 1.67f, "jack");
 
         Map<Object, Integer> map = new HashMap<>();
         map.put(p1, 1);
-        map.put(p2, 3);
-        map.put("jack", 1);
-        map.put("rose", 1);
+        map.put(p2, 2);
         map.put("jack", 3);
+        map.put("rose", 4);
+        map.put("jack", 5);
+        map.put(null, 6);
 
-        System.out.println(map.size());
+//        System.out.println(map.size());
+//        System.out.println(map.remove("jack"));
+//        System.out.println(map.get("jack"));
+//        System.out.println(map.size());
+
+        System.out.println(map.containsKey(p1));
+        System.out.println(map.containsKey(null));
+        System.out.println(map.containsValue(6));
+        System.out.println(map.containsValue(1));
+
+//        map.traversal(new Map.Visitor<Object, Integer>() {
+//            @Override
+//            public boolean visit(Object key, Integer value) {
+//                System.out.println(key + "_" +value);
+//                return false;
+//            }
+//        });
+
+//        System.out.println(map.get("jack"));
+//        System.out.println(map.get("rose"));
+//        System.out.println(map.get(null));
+//        System.out.println(map.get(p1));
+    }
+
+    static void test5() {
+        Person p1 = new Person(10, 1.67f, "jack");
+        Person p2 = new Person(10, 1.67f, "jack");
+
+        Map<Object, Integer> map = new HashMap<>();
+        map.put(p1, 1);
+        map.put(p2, 2);
+        map.put("jack", 3);
+        map.put("rose", 4);
+        map.put("jack", 5);
+        map.put(null, 6);
+
+//        System.out.println(map.size());
+//        System.out.println(map.remove("jack"));
+//        System.out.println(map.get("jack"));
+//        System.out.println(map.size());
+
+        System.out.println(map.containsKey(p1));
+        System.out.println(map.containsKey(null));
+        System.out.println(map.containsValue(6));
+        System.out.println(map.containsValue(1));
+
+//        map.traversal(new Map.Visitor<Object, Integer>() {
+//            @Override
+//            public boolean visit(Object key, Integer value) {
+//                System.out.println(key + "_" +value);
+//                return false;
+//            }
+//        });
+
+//        System.out.println(map.get("jack"));
+//        System.out.println(map.get("rose"));
+//        System.out.println(map.get(null));
+//        System.out.println(map.get(p1));
+    }
+
+    public static void main(String[] args) {
+        Map<Object, Integer> map = new HashMap<>();
+        for (int i = 1; i <= 19; i++) {
+            map.put(new Key(i), i);
+        }
+
+        System.out.println(map.get(new Key(1)));
     }
 }
