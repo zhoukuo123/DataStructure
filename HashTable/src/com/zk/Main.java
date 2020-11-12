@@ -15,19 +15,25 @@ public class Main {
     }
 
     static void test2() {
+        Integer a = 110;
+        Float b = 10.6f;
+        Long c = 156L;
+        Double d = 10.9;
+        String e = "rose";
+
+        System.out.println(a.hashCode());
+        System.out.println(b.hashCode());
+        System.out.println(c.hashCode());
+        System.out.println(d.hashCode());
+        System.out.println(e.hashCode());
+    }
+
+    static void test3() {
 
     }
 
     public static void main(String[] args) {
-        int a = 110;
-        float b = 10.6f;
-        long c = 156L;
-        double d = 10.9;
-        String e = "rose";
-
-        System.out.println(Integer.hashCode(a));
-        System.out.println(Float.floatToIntBits(b));
-        System.out.println();
-
+        Person p1 = new Person(10, 1.67f, "jack");
+        System.out.println(p1.hashCode());
     }
 }
