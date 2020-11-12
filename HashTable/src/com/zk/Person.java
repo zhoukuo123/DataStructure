@@ -14,6 +14,7 @@ public class Person {
     @Override
     /**
      * 用来比较2个对象是否相等
+     * 用以判断2个key是否为同一个key
      */
     public boolean equals(Object obj) {
         // 内存地址
@@ -29,6 +30,9 @@ public class Person {
     }
 
     @Override
+    /**
+     * 必须保证equals为true的2个key的哈希值一样
+     */
     public int hashCode() {
         int hashCode = Integer.hashCode(age);
         hashCode = hashCode * 31 + Float.hashCode(hashCode);

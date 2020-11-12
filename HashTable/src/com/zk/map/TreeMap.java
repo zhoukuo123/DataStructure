@@ -55,7 +55,7 @@ public class TreeMap<K, V> implements Map<K, V> {
         Node<K, V> parent = root;
         Node<K, V> node = root;
         int cmp = 0;
-        while (node != null) {
+        do {
             cmp = compare(key, node.key);
             parent = node;
             if (cmp > 0) {
@@ -68,7 +68,7 @@ public class TreeMap<K, V> implements Map<K, V> {
                 node.value = value;
                 return oldValue;
             }
-        }
+        } while (node != null);
 
         // 看看插入到父节点的哪个位置
         Node<K, V> newNode = new Node<>(key, value, parent);
@@ -446,7 +446,6 @@ public class TreeMap<K, V> implements Map<K, V> {
         if (comparator != null) {
             return comparator.compare(e1, e2);
         }
-
         return ((Comparable<K>) e1).compareTo(e2);
     }
 
