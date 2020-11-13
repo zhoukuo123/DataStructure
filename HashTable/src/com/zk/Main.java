@@ -128,6 +128,43 @@ public class Main {
 //
 //        System.out.println(map.get(new Key(1)));
 //    }
+    static void test1Map(Map<String, Integer> map, String[] words) {
+        Times.test(map.getClass().getName(), new Task() {
+            @Override
+            public void execute() {
+                for (String word : words) {
+                    Integer count = map.get(word);
+                    count = count == null ? 0 : count;
+                    map.put(word, count + 1);
+                }
+                System.out.println(map.size()); // 17188
+
+                int count = 0;
+                for (String word : words) {
+                    Integer i = map.get(word);
+                    count += i == null ? 0 : i;
+                    map.remove(word);
+                }
+                Asserts.test(count == words.length);
+                Asserts.test(map.size() == 0);
+            }
+        });
+    }
+
+    static void test1() {
+        String filepath = "C:\\Users\\MJ Lee\\Desktop\\src\\java\\util\\concurrent";
+        FileInfo fileInfo = Files.read(filepath, null);
+        String[] words = fileInfo.words();
+
+        System.out.println("总行数：" + fileInfo.getLines());
+        System.out.println("单词总数：" + words.length);
+        System.out.println("-------------------------------------");
+
+        test1Map(new TreeMap<>(), words);
+        test1Map(new HashMap<>(), words);
+        test1Map(new LinkedHashMap<>(), words);
+    }
+
     static void test2(HashMap<Object, Integer> map) {
         for (int i = 1; i <= 20; i++) {
             map.put(new Key(i), i);
@@ -208,11 +245,29 @@ public class Main {
         Asserts.test(map.size() == 20);
     }
 
+    static void test1() {
+        String filepath = ""
+    }
 
     public static void main(String[] args) {
         test2(new HashMap<>());
         test3(new HashMap<>());
         test4(new HashMap<>());
         test5(new HashMap<>());
+
+        //		test1();
+//		test2(new HashMap<>());
+//		test3(new HashMap<>());
+//		test4(new HashMap<>());
+//		test5(new HashMap<>());
+//
+//        test1();
+//        test2(new LinkedHashMap<>());
+//        test3(new LinkedHashMap<>());
+//        test4(new LinkedHashMap<>());
+//        test5(new LinkedHashMap<>());
+
+        java.util.HashMap<String, String> map;
+        java.util.LinkedHashMap<String, String> map2;
     }
 }
