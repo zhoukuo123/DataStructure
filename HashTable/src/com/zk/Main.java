@@ -1,5 +1,7 @@
 package com.zk;
 
+import com.zk.file.FileInfo;
+import com.zk.file.Files;
 import com.zk.map.HashMap;
 import com.zk.map.Map;
 import com.zk.model.Key;
@@ -129,7 +131,7 @@ public class Main {
 //        System.out.println(map.get(new Key(1)));
 //    }
     static void test1Map(Map<String, Integer> map, String[] words) {
-        Times.test(map.getClass().getName(), new Task() {
+        Times.test(map.getClass().getName(), new Times.Task() {
             @Override
             public void execute() {
                 for (String word : words) {
@@ -152,7 +154,7 @@ public class Main {
     }
 
     static void test1() {
-        String filepath = "C:\\Users\\MJ Lee\\Desktop\\src\\java\\util\\concurrent";
+        String filepath = "/home/linux/concurrent";
         FileInfo fileInfo = Files.read(filepath, null);
         String[] words = fileInfo.words();
 
@@ -160,9 +162,9 @@ public class Main {
         System.out.println("单词总数：" + words.length);
         System.out.println("-------------------------------------");
 
-        test1Map(new TreeMap<>(), words);
+//        test1Map(new TreeMap<>(), words);
         test1Map(new HashMap<>(), words);
-        test1Map(new LinkedHashMap<>(), words);
+//        test1Map(new LinkedHashMap<>(), words);
     }
 
     static void test2(HashMap<Object, Integer> map) {
@@ -245,22 +247,13 @@ public class Main {
         Asserts.test(map.size() == 20);
     }
 
-    static void test1() {
-        String filepath = ""
-    }
-
     public static void main(String[] args) {
+        test1();
         test2(new HashMap<>());
         test3(new HashMap<>());
         test4(new HashMap<>());
         test5(new HashMap<>());
 
-        //		test1();
-//		test2(new HashMap<>());
-//		test3(new HashMap<>());
-//		test4(new HashMap<>());
-//		test5(new HashMap<>());
-//
 //        test1();
 //        test2(new LinkedHashMap<>());
 //        test3(new LinkedHashMap<>());

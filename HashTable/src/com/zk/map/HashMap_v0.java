@@ -5,15 +5,14 @@ import java.util.Objects;
 import java.util.Queue;
 
 @SuppressWarnings({"unchecked", "rawtypes"})
-public class HashMap<K, V> implements Map<K, V> {
+public class HashMap_v0<K, V> implements Map<K, V> {
     private static final boolean RED = false;
     private static final boolean BLACK = true;
     private int size;
     private Node<K, V>[] table;
     private static final int DEFAULT_CAPACITY = 1 << 4;
-    private static final float DEFAULT_LOAD_FACTOR = 0.75f;
 
-    public HashMap() {
+    public HashMap_v0() {
         table = new Node[DEFAULT_CAPACITY];
     }
 
@@ -54,7 +53,7 @@ public class HashMap<K, V> implements Map<K, V> {
         Node<K, V> node = root;
         int cmp = 0;
         K k1 = key;
-        int h1 = hash(k1);
+        int h1 = k1 == null ? 0 : k1.hashCode();
         Node<K, V> result = null;
         boolean searched = false; // 是否已经搜索过这个key
         do {
@@ -256,7 +255,7 @@ public class HashMap<K, V> implements Map<K, V> {
      * 从node节点中找key对应的节点
      */
     private Node<K, V> node(Node<K, V> node, K k1) {
-        int h1 = hash(k1);
+        int h1 = k1 == null ? 0 : k1.hashCode();
         // 存储查找结果
         Node<K, V> result = null;
         int cmp = 0;
@@ -280,6 +279,11 @@ public class HashMap<K, V> implements Map<K, V> {
             } else { // 只能往左边找
                 node = node.left;
             }
+//            } else if (node.left != null && (result = node(node.left, k1)) != null) {
+//                return result;
+//            } else {
+//                return null;
+//            }
         }
         return null;
     }
@@ -288,17 +292,13 @@ public class HashMap<K, V> implements Map<K, V> {
      * 根据key生成对应的索引(在桶数组中的位置)
      */
     private int index(K key) {
-        return hash(key) & (table.length - 1);
-    }
-
-    private int hash(K key) {
         if (key == null) return 0;
         int hash = key.hashCode();
-        return hash ^ (hash >>> 16);
+        return (hash ^ (hash >>> 16)) & (table.length - 1);
     }
 
     private int index(Node<K, V> node) {
-        return node.hash & (table.length - 1);
+        return (node.hash ^ (node.hash >>> 16)) & (table.length - 1);
     }
 
 //    /**
@@ -538,8 +538,7 @@ public class HashMap<K, V> implements Map<K, V> {
 
         public Node(K key, V value, Node<K, V> parent) {
             this.key = key;
-            int hash = key == null ? 0 : key.hashCode();
-            this.hash = hash ^ (hash >>> 16);
+            this.hash = key == null ? 0 : key.hashCode();
             this.value = value;
             this.parent = parent;
         }
