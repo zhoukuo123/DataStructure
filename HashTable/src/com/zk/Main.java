@@ -119,12 +119,16 @@ public class Main {
 //        System.out.println(map.get(p1));
     }
 
-    public static void main(String[] args) {
+    static void test6() {
         Map<Object, Integer> map = new HashMap<>();
         for (int i = 1; i <= 19; i++) {
             map.put(new Key(i), i);
         }
 
         System.out.println(map.get(new Key(1)));
+    }
+
+    public static void main(String[] args) {
+        test6();
     }
 }

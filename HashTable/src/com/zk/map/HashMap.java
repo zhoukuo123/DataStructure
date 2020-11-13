@@ -52,17 +52,41 @@ public class HashMap<K, V> implements Map<K, V> {
         Node<K, V> parent = root;
         Node<K, V> node = root;
         int cmp = 0;
-        int h1 = key == null ? 0 : key.hashCode();
+        K k1 = key;
+        int h1 = k1 == null ? 0 : k1.hashCode();
+        Node<K, V> result = null;
         do {
-            cmp = compare(key, node.key, h1, node.hash);
             parent = node;
+            K k2 = node.key;
+            int h2 = node.hash;
+            if (h1 > h2) {
+                cmp = 1;
+            } else if (h1 < h2) {
+                cmp = -1;
+            } else if (Objects.equals(k1, k2)) {
+                cmp = 0;
+            } else if (k1 != null && k2 != null
+                    && k1.getClass() == k2.getClass()
+                    && k1 instanceof Comparable) {
+                cmp = ((Comparable) k1).compareTo(k2);
+            } else { // 先扫描, 然后再根据内存地址大小决定左右
+                if ((node.left != null && (result = node(node.left, k1)) != null)
+                        || (node.right != null && (result = node(node.right, k1)) != null)) {
+                    // 已经存在这个key
+                    node = result;
+                    cmp = 0;
+                } else { // 不存在这个key
+                    cmp = System.identityHashCode(k1) - System.identityHashCode(k2);
+                }
+            }
+
             if (cmp > 0) {
                 node = node.right;
             } else if (cmp < 0) {
                 node = node.left;
             } else { // 相等
-                node.key = key; // 覆盖更合理
                 V oldValue = node.value;
+                node.key = key; // 覆盖更合理
                 node.value = value;
                 return oldValue;
             }
@@ -216,16 +240,42 @@ public class HashMap<K, V> implements Map<K, V> {
         return node.parent;
     }
 
-    private Node<K, V> node(K key) {
-        Node<K, V> node = table[index(key)];
-        int h1 = key == null ? 0 : key.hashCode();
+    private Node<K, V> node(K k1) {
+        Node<K, V> root = table[index(k1)];
+        return root == null ? null : node(root, k1);
+    }
+
+    private Node<K, V> node(Node<K, V> node, K k1) {
+        int h1 = k1 == null ? 0 : k1.hashCode();
+        // 存储查找结果
+        Node<K, V> result = null;
         while (node != null) {
-            int cmp = compare(key, node.key, h1, node.hash);
-            if (cmp == 0) return node;
-            if (cmp > 0) {
+            K k2 = node.key;
+            int h2 = node.hash;
+            // 先比较哈希值
+            if (h1 > h2) {
                 node = node.right;
-            } else {
+            } else if (h1 < h2) {
                 node = node.left;
+            } else if (Objects.equals(k1, k2)) {
+                return node;
+            } else if (k1 != null && k2 != null
+                    && k1.getClass() == k2.getClass()
+                    && k1 instanceof Comparable) {
+                int cmp = ((Comparable) k1).compareTo(k2);
+                if (cmp > 0) {
+                    node = node.right;
+                } else if (cmp < 0) {
+                    node = node.left;
+                } else {
+                    return node;
+                }
+            } else if (node.right != null && (result = node(node.right, k1)) != null) {
+                return result;
+            } else if (node.left != null && (result = node(node.left, k1)) != null) {
+                return result;
+            } else {
+                return null;
             }
         }
         return null;
@@ -512,6 +562,14 @@ public class HashMap<K, V> implements Map<K, V> {
             }
 
             return null;
+        }
+
+        @Override
+        public String toString() {
+            return "Node{" +
+                    "key=" + key +
+                    ", value=" + value +
+                    '}';
         }
     }
 }
