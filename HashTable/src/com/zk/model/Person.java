@@ -1,6 +1,6 @@
 package com.zk.model;
 
-public class Person {
+public class Person implements Comparable<Person> {
     private int age;
     private float height;
     private String name;
@@ -38,5 +38,10 @@ public class Person {
         hashCode = hashCode * 31 + Float.hashCode(hashCode);
         hashCode = hashCode * 31 + (name != null ? name.hashCode() : 0);
         return hashCode;
+    }
+
+    @Override
+    public int compareTo(Person o) {
+        return age - o.age;
     }
 }
