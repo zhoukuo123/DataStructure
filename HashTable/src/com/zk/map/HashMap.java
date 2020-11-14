@@ -44,7 +44,7 @@ public class HashMap<K, V> implements Map<K, V> {
         // 取出index位置的红黑树根节点
         Node<K, V> root = table[index];
         if (root == null) {
-            root = new Node<>(key, value, null);
+            root = createNode(key, value, null);
             table[index] = root;
             size++;
             afterPut(root);
@@ -101,7 +101,7 @@ public class HashMap<K, V> implements Map<K, V> {
         } while (node != null);
 
         // 看看插入到父节点的哪个位置
-        Node<K, V> newNode = new Node<>(key, value, parent);
+        Node<K, V> newNode = createNode(key, value, parent);
         if (cmp > 0) {
             parent.right = newNode;
         } else {
@@ -175,8 +175,12 @@ public class HashMap<K, V> implements Map<K, V> {
         }
     }
 
+    protected Node<K, V> createNode(K key, V value, Node<K, V> parent) {
+        return new Node<>(key, value, parent);
+    }
+
     private void resize() {
-        // 装填因子 > 0.75 才扩容
+        // 装填因子 > 0.75 才扩容 注意: 强制转换为float计算
         if ((float) size / table.length <= DEFAULT_LOAD_FACTOR) return;
 
         Node<K, V>[] oldTable = table;
@@ -615,7 +619,7 @@ public class HashMap<K, V> implements Map<K, V> {
         return colorOf(node) == RED;
     }
 
-    private static class Node<K, V> {
+    protected static class Node<K, V> {
         int hash;
         K key;
         V value;

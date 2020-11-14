@@ -4,6 +4,7 @@ import com.zk.file.FileInfo;
 import com.zk.file.Files;
 import com.zk.map.HashMap;
 import com.zk.map.Map;
+import com.zk.map.TreeMap;
 import com.zk.model.Key;
 import com.zk.model.SubKey1;
 import com.zk.model.SubKey2;
@@ -162,7 +163,7 @@ public class Main {
         System.out.println("单词总数：" + words.length);
         System.out.println("-------------------------------------");
 
-//        test1Map(new TreeMap<>(), words);
+        test1Map(new TreeMap<>(), words);
         test1Map(new HashMap<>(), words);
 //        test1Map(new LinkedHashMap<>(), words);
     }
