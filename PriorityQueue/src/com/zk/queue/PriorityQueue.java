@@ -2,30 +2,41 @@ package com.zk.queue;
 
 import com.zk.heap.BinaryHeap;
 
+import java.util.Comparator;
+
 public class PriorityQueue<E> {
-    private BinaryHeap<E> heap = new BinaryHeap<>();
+    private BinaryHeap<E> heap;
+
+    public PriorityQueue(Comparator<E> comparator) {
+        heap = new BinaryHeap<>(comparator);
+    }
+
+    public PriorityQueue() {
+        this(null);
+    }
+
 
     public int size() {
-        return list.size();
+        return heap.size();
     }
 
     public boolean isEmpty() {
-        return list.isEmpty();
+        return heap.isEmpty();
     }
 
     public void clear() {
-        list.clear();
+        heap.clear();
     }
 
     public void enQueue(E element) {
-        list.add(element);
+        heap.add(element);
     }
 
     public E deQueue() {
-        return list.remove(0);
+        return heap.remove();
     }
 
     public E front() {
-        return list.get(0);
+        return heap.get();
     }
 }
