@@ -5,10 +5,8 @@ import org.omg.CORBA.Object;
 import java.util.Comparator;
 
 @SuppressWarnings("unchecked")
-public class BinaryHeap<E> implements Heap<E> {
+public class BinaryHeap<E> extends AbstractHeap<E> implements Heap<E> {
     private E[] elements;
-    private int size;
-    private Comparator<E> comparator;
     private static final int DEFAULT_CAPACITY = 10;
 
     public BinaryHeap() {
@@ -16,18 +14,8 @@ public class BinaryHeap<E> implements Heap<E> {
     }
 
     public BinaryHeap(Comparator<E> comparator) {
-        this.comparator = comparator;
+        super(comparator);
         this.elements = (E[]) new Object[DEFAULT_CAPACITY];
-    }
-
-    @Override
-    public int size() {
-        return size;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return size == 0;
     }
 
     @Override
@@ -68,25 +56,33 @@ public class BinaryHeap<E> implements Heap<E> {
      * @param index
      */
     private void siftUp(int index) {
+//        E e = elements[index];
+//        while (index > 0) {
+//            int pindex = (index - 1) >> 1;
+//            E p = elements[pindex];
+//            if (compare(e, p) <= 0) return;
+//
+//            // 交换index, pindex位置的内容
+//            E tmp = elements[index];
+//            elements[index] = elements[pindex];
+//            elements[pindex] = tmp;
+//
+//            // 重新赋值index
+//            index = pindex;
+//        }
         E e = elements[index];
         while (index > 0) {
             int pindex = (index - 1) >> 1;
             E p = elements[pindex];
-            if (compare(e, p) <= 0) return;
+            if (compare(e, p) <= 0) break;
 
-            // 交换index, pindex位置的内容
-            E tmp = elements[index];
-            elements[index] = elements[pindex];
-            elements[pindex] = tmp;
+            // 将父元素存储在index位置
+            elements[index] = p;
 
             // 重新赋值index
             index = pindex;
         }
-    }
-
-    private int compare(E e1, E e2) {
-        return comparator != null ? comparator.compare(e1, e2)
-                : ((Comparable<E>) e1).compareTo(e2);
+        elements[index] = e;
     }
 
     private void ensureCapacity(int capacity) {
