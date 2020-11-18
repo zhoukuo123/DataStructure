@@ -42,7 +42,15 @@ public class BinaryHeap<E> extends AbstractHeap<E> implements Heap<E> {
 
     @Override
     public E remove() {
-        return null;
+        emptyCheck();
+
+        int lastIndex = --size;
+        E root = elements[0];
+        elements[0] = elements[lastIndex];
+        elements[lastIndex] = null;
+
+        siftDown(0);
+        return root;
     }
 
     @Override
@@ -51,38 +59,76 @@ public class BinaryHeap<E> extends AbstractHeap<E> implements Heap<E> {
     }
 
     /**
+     * 让index位置的元素下滤
+     *
+     * @param index
+     */
+    private void siftDown(int index) {
+        E element = elements[index];
+        int half = size >> 1;
+        // 第一个叶子节点的索引 == 非叶子节点的数量
+        // index < 第一个叶子节点的索引
+        // 必须保证index位置是非叶子节点
+        while (index < half) {
+            // index的节点有2中情况
+            // 1.只有左子节点
+            // 2.同时有左右子节点
+
+            // 默认为左子节点跟它进行比较
+            int childIndex = (index << 1) + 1;
+            E child = elements[childIndex];
+
+            // 右子节点
+            int rightIndex = childIndex + 1;
+
+            // 选出左右子节点最大的那个
+            if (rightIndex < size && compare(elements[rightIndex], child) > 0) {
+                child = elements[childIndex = rightIndex];
+            }
+
+            if (compare(element, child) >= 0) break;
+
+            // 将子节点存放到index位置
+            elements[index] = child;
+            // 重新设置index
+            index = childIndex;
+        }
+        elements[index] = element;
+    }
+
+    /**
      * 让index位置的元素上滤
      *
      * @param index
      */
     private void siftUp(int index) {
-//        E e = elements[index];
+//        E element = elements[index];
 //        while (index > 0) {
-//            int pindex = (index - 1) >> 1;
-//            E p = elements[pindex];
-//            if (compare(e, p) <= 0) return;
+//            int parentIndex = (index - 1) >> 1;
+//            E p = elements[parentIndex];
+//            if (compare(element, p) <= 0) return;
 //
 //            // 交换index, pindex位置的内容
 //            E tmp = elements[index];
-//            elements[index] = elements[pindex];
-//            elements[pindex] = tmp;
+//            elements[index] = elements[parentIndex];
+//            elements[parentIndex] = tmp;
 //
 //            // 重新赋值index
-//            index = pindex;
+//            index = parentIndex;
 //        }
-        E e = elements[index];
+        E element = elements[index];
         while (index > 0) {
-            int pindex = (index - 1) >> 1;
-            E p = elements[pindex];
-            if (compare(e, p) <= 0) break;
+            int parentIndex = (index - 1) >> 1;
+            E parent = elements[parentIndex];
+            if (compare(element, parent) <= 0) break;
 
             // 将父元素存储在index位置
-            elements[index] = p;
+            elements[index] = parent;
 
             // 重新赋值index
-            index = pindex;
+            index = parentIndex;
         }
-        elements[index] = e;
+        elements[index] = element;
     }
 
     private void ensureCapacity(int capacity) {
