@@ -2,6 +2,11 @@ package com.zk.heap;
 
 import java.util.Comparator;
 
+/**
+ * 二叉堆(最大堆)
+ *
+ * @param <E>
+ */
 @SuppressWarnings("unchecked")
 public class BinaryHeap<E> extends AbstractHeap<E> implements Heap<E> {
     private E[] elements;
@@ -13,6 +18,7 @@ public class BinaryHeap<E> extends AbstractHeap<E> implements Heap<E> {
         if (elements == null || elements.length == 0) {
             this.elements = (E[]) new Object[DEFAULT_CAPACITY];
         } else {
+            size = elements.length;
             int capacity = Math.max(elements.length, DEFAULT_CAPACITY);
             this.elements = (E[]) new Object[capacity];
             for (int i = 0; i < elements.length; i++) {
@@ -90,12 +96,14 @@ public class BinaryHeap<E> extends AbstractHeap<E> implements Heap<E> {
      */
     private void heapify() {
         // 自上而下的上滤
-        for (int i = 0; i < elements.length; i++) {
-            E element = elements[i];
-
-        }
+//        for (int i = 1; i < size; i++) {
+//            siftUp(i);
+//        }
 
         // 自下而上的下滤
+        for (int i = (size >> 1) - 1; i >= 0; i--) {
+            siftDown(i);
+        }
     }
 
     /**
