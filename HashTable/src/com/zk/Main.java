@@ -3,6 +3,7 @@ package com.zk;
 import com.zk.file.FileInfo;
 import com.zk.file.Files;
 import com.zk.map.HashMap;
+import com.zk.map.LinkedHashMap;
 import com.zk.map.Map;
 import com.zk.map.TreeMap;
 import com.zk.model.Key;
@@ -165,7 +166,7 @@ public class Main {
 
         test1Map(new TreeMap<>(), words);
         test1Map(new HashMap<>(), words);
-//        test1Map(new LinkedHashMap<>(), words);
+        test1Map(new LinkedHashMap<>(), words);
     }
 
     static void test2(HashMap<Object, Integer> map) {
@@ -249,16 +250,16 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        test1();
+//        test1();
 //        test2(new HashMap<>());
 //        test3(new HashMap<>());
 //        test4(new HashMap<>());
 //        test5(new HashMap<>());
-//        test1();
-//        test2(new LinkedHashMap<>());
-//        test3(new LinkedHashMap<>());
-//        test4(new LinkedHashMap<>());
-//        test5(new LinkedHashMap<>());
+        test1();
+        test2(new LinkedHashMap<>());
+        test3(new LinkedHashMap<>());
+        test4(new LinkedHashMap<>());
+        test5(new LinkedHashMap<>());
 
         java.util.HashMap<String, String> map;
         java.util.LinkedHashMap<String, String> map2;
