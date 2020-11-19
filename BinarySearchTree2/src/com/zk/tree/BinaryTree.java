@@ -21,45 +21,19 @@ public class BinaryTree<E> {
     }
 
     public void preorder(Visitor<E> visitor) {
-        if (visitor == null) return;
-        preorder(root, visitor);
-    }
+        if (visitor == null || root == null) return;
 
-    private void preorder(Node<E> node, Visitor<E> visitor) {
-        if (node == null || visitor.stop) return;
-
-        visitor.stop = visitor.visit(node.element);
-        preorder(node.left, visitor);
-        preorder(node.right, visitor);
+        
     }
 
     public void inorder(Visitor<E> visitor) {
         if (visitor == null) return;
-        inorder(root, visitor);
-    }
 
-    private void inorder(Node<E> node, Visitor<E> visitor) {
-        if (node == null || visitor.stop) return;
-
-        inorder(node.left, visitor);
-        if (visitor.stop) return;
-        visitor.stop = visitor.visit(node.element);
-        inorder(node.right, visitor);
     }
 
     public void postorder(Visitor<E> visitor) {
         if (visitor == null) return;
-        postorder(root, visitor);
-    }
 
-    private void postorder(Node<E> node, Visitor<E> visitor) {
-        if (node == null || visitor.stop) return; // 递归调用的终止
-
-        postorder(node.left, visitor);
-        postorder(node.right, visitor);
-
-        if (visitor.stop) return; // 防止left或者right是true
-        visitor.stop = visitor.visit(node.element);
     }
 
     public void levelOrder(Visitor<E> visitor) {
