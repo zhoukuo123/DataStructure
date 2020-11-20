@@ -23,6 +23,7 @@ public class BinaryTree<E> {
 
     public void preorder(Visitor<E> visitor) {
         if (visitor == null || root == null) return;
+
         Node<E> node = root;
         Stack<Node<E>> stack = new Stack<>();
         while (true) {
@@ -44,13 +45,49 @@ public class BinaryTree<E> {
     }
 
     public void inorder(Visitor<E> visitor) {
-        if (visitor == null) return;
+        if (visitor == null || root == null) return;
 
+        Node<E> node = root;
+        Stack<Node<E>> stack = new Stack<>();
+        while (true) {
+            if (node != null) {
+                stack.push(node);
+                node = node.left;
+            } else if (stack.isEmpty()) {
+                return;
+            } else {
+                node = stack.pop();
+                // 访问node节点
+                if (visitor.visit(node.element)) return;
+                // 让右节点进行中序遍历
+                node = node.right;
+            }
+        }
     }
 
     public void postorder(Visitor<E> visitor) {
-        if (visitor == null) return;
+        if (visitor == null || root == null) return;
 
+        // 记录上一次弹出访问的节点
+        Node<E> prev = null;
+        Stack<Node<E>> stack = new Stack<>();
+        stack.push(root);
+
+        while (!stack.isEmpty()) {
+            Node<E> top = stack.peek();
+            if (top.isLeaf() || (prev != null && prev.parent == top)) { // 注意
+                prev = stack.pop();
+                // 访问节点
+                if (visitor.visit(prev.element)) return;
+            } else {
+                if (top.right != null) {
+                    stack.push(top.right);
+                }
+                if (top.left != null) {
+                    stack.push(top.left);
+                }
+            }
+        }
     }
 
     public void levelOrder(Visitor<E> visitor) {
@@ -182,6 +219,7 @@ public class BinaryTree<E> {
     }
 
     public static abstract class Visitor<E> {
+        // 用来记录递归调用的停止状态
         boolean stop;
 
         /**
@@ -198,6 +236,7 @@ public class BinaryTree<E> {
         Node<E> left;
         Node<E> right;
         Node<E> parent;
+
         public Node(E element, Node<E> parent) {
             this.element = element;
             this.parent = parent;
