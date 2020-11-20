@@ -34,7 +34,7 @@ public class Main {
                 return false;
             }
         };
-        bst.postorder(visitor);
+        bst.preorder(visitor);
         System.out.println(sb);
     }
 
