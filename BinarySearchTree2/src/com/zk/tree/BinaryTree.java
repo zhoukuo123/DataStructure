@@ -2,6 +2,7 @@ package com.zk.tree;
 
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Stack;
 
 public class BinaryTree<E> {
     protected int size;
@@ -22,8 +23,24 @@ public class BinaryTree<E> {
 
     public void preorder(Visitor<E> visitor) {
         if (visitor == null || root == null) return;
-
-        
+        Node<E> node = root;
+        Stack<Node<E>> stack = new Stack<>();
+        while (true) {
+            if (node != null) {
+                // 访问node节点
+                if (visitor.visit(node.element)) return;
+                // 将右子节点入栈
+                if (node.right != null) {
+                    stack.push(node.right);
+                }
+                // 向左走
+                node = node.left;
+            } else if (stack.isEmpty()) {
+                return;
+            } else {
+                node = stack.pop();
+            }
+        }
     }
 
     public void inorder(Visitor<E> visitor) {
@@ -166,12 +183,14 @@ public class BinaryTree<E> {
 
     public static abstract class Visitor<E> {
         boolean stop;
+
         /**
          * 外界自定义访问逻辑
+         *
          * @param element 节点上的元素
          * @return true 代表停止访问
          */
-        abstract boolean visit(E element);
+        public abstract boolean visit(E element);
     }
 
     protected static class Node<E> {

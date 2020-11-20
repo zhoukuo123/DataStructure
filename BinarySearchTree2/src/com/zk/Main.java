@@ -1,6 +1,7 @@
 package com.zk;
 
 import com.zk.tree.BST;
+import com.zk.tree.BinaryTree;
 
 public class Main {
     static void test1() {
@@ -17,9 +18,29 @@ public class Main {
         System.out.println(bst);
     }
 
-    public static void main(String[] args) {
-        test1();
+    static void test2() {
+        Integer[] data = new Integer[]{
+                7, 4, 9, 2, 5, 8, 11
+        };
+        BST<Integer> bst = new BST<>();
+        for (int i = 0; i < data.length; i++) {
+            bst.add(data[i]);
+        }
+        StringBuilder sb = new StringBuilder();
+        BinaryTree.Visitor<Integer> visitor = new BinaryTree.Visitor<Integer>() {
+            @Override
+            public boolean visit(Integer element) {
+                sb.append(element).append(" ");
+                return false;
+            }
+        };
+        bst.preorder(visitor);
+        System.out.println(sb);
+    }
 
+    public static void main(String[] args) {
+//        test1();
+        test2();
 
     }
 }
