@@ -3,24 +3,28 @@ package com.zk;
 import com.zk.sort.BubbleSort3;
 import com.zk.sort.HeapSort;
 import com.zk.sort.SelectionSort;
+import com.zk.sort.Sort;
 import com.zk.tools.Integers;
-import com.zk.tools.Times;
+
+import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        Integer[] array1 = Integers.random(10000, 1, 20000);
-        Integer[] array2 = Integers.copy(array1);
-        Integer[] array3 = Integers.copy(array1);
+        Integer[] array = Integers.random(10000, 1, 20000);
 
-        Times.test("HeapSort", () -> {
-            new HeapSort().sort(array1);
-        });
-        Times.test("SelectionSort", () -> {
-            new SelectionSort().sort(array2);
-        });
-        Times.test("BubbleSort3", () -> {
-            new BubbleSort3().sort(array3);
-        });
+        testSorts(array, new SelectionSort(), new HeapSort(), new BubbleSort3());
+    }
+
+    static void testSorts(Integer[] array, Sort... sorts) {
+        for (Sort sort : sorts) {
+            sort.sort(Integers.copy(array));
+        }
+
+        Arrays.sort(sorts);
+
+        for (Sort sort : sorts) {
+            System.out.println(sort);
+        }
     }
 
     static void selectionSort(Integer[] array) {

@@ -1,9 +1,13 @@
 package com.zk.sort;
 
-public abstract class Sort {
+import java.text.DecimalFormat;
+
+public abstract class Sort implements Comparable<Sort> {
     protected Integer[] array;
     private int cmpCount;
     private int swapCount;
+    private long time;
+    private DecimalFormat fmt = new DecimalFormat("#.00");
 
     // 公共接口
     public void sort(Integer[] array) {
@@ -13,7 +17,14 @@ public abstract class Sort {
         // 将数组存起来
         this.array = array;
 
+        long begin = System.currentTimeMillis();
         sort();
+        time = System.currentTimeMillis() - begin;
+    }
+
+    @Override
+    public int compareTo(Sort o) {
+        return (int) (time - o.time);
     }
 
     protected abstract void sort();
@@ -40,5 +51,24 @@ public abstract class Sort {
         array[i2] = tmp;
     }
 
+    @Override
+    public String toString() {
+        String timeStr = "耗时:" + (time / 1000.0) + "s(" + time + "ms)";
+        String compareCountStr = "比较:" + numberString(cmpCount);
+        String swapCountStr = "交换:" + numberString(swapCount);
 
+        return "[" + getClass().getSimpleName() + "]\n"
+                + timeStr + "\t"
+                + compareCountStr + "\t"
+                + swapCountStr + "\n"
+                + "-------------------------------------------------------";
+    }
+
+    private String numberString(int number) {
+        if (number < 10000) return "" + number;
+
+        if (number < 100000000) return fmt.format(number / 10000.0) + "万";
+
+        return fmt.format(number / 100000000.0) + "亿";
+    }
 }
