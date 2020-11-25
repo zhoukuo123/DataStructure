@@ -1,13 +1,26 @@
 package com.zk;
 
-import com.zk.tools.Asserts;
+import com.zk.sort.BubbleSort3;
+import com.zk.sort.HeapSort;
+import com.zk.sort.SelectionSort;
 import com.zk.tools.Integers;
+import com.zk.tools.Times;
 
 public class Main {
     public static void main(String[] args) {
-        Integer[] array = Integers.random(10, 1, 100);
-        selectionSort(array);
-        Asserts.test(Integers.isAscOrder(array));
+        Integer[] array1 = Integers.random(10000, 1, 20000);
+        Integer[] array2 = Integers.copy(array1);
+        Integer[] array3 = Integers.copy(array1);
+
+        Times.test("HeapSort", () -> {
+            new HeapSort().sort(array1);
+        });
+        Times.test("SelectionSort", () -> {
+            new SelectionSort().sort(array2);
+        });
+        Times.test("BubbleSort3", () -> {
+            new BubbleSort3().sort(array3);
+        });
     }
 
     static void selectionSort(Integer[] array) {

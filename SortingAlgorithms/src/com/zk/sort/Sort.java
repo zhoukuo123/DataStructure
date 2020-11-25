@@ -28,10 +28,17 @@ public abstract class Sort {
         return array[i1] - array[i2];
     }
 
+    protected int cmpElements(Integer v1, Integer v2) {
+        cmpCount++;
+        return v1 - v2;
+    }
+
     protected void swap(int i1, int i2) {
         swapCount++;
         int tmp = array[i1];
         array[i1] = array[i2];
         array[i2] = tmp;
     }
+
+
 }

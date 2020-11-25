@@ -9,4 +9,9 @@ public class MergeSort extends Sort {
         Queue<Integer> queue = new LinkedList<>();
         Stack<Integer> stack;
     }
+
+    @Override
+    protected void sort() {
+
+    }
 }
