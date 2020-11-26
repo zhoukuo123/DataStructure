@@ -1,6 +1,6 @@
 package com.zk.sort;
 
-public class HeapSort extends Sort {
+public class HeapSort<E extends Comparable<E>> extends Sort<E> {
     private int heapSize;
 
     // 时间复杂度: O(nlogn)
@@ -22,7 +22,7 @@ public class HeapSort extends Sort {
     }
 
     private void siftDown(int index) {
-        Integer element = array[index];
+        E element = array[index];
         int half = heapSize >> 1;
         // 第一个叶子节点的索引 == 非叶子节点的数量
         // index < 第一个叶子节点的索引
@@ -34,17 +34,17 @@ public class HeapSort extends Sort {
 
             // 默认为左子节点跟它进行比较
             int childIndex = (index << 1) + 1;
-            Integer child = array[childIndex];
+            E child = array[childIndex];
 
             // 右子节点
             int rightIndex = childIndex + 1;
 
             // 选出左右子节点最大的那个
-            if (rightIndex < heapSize && cmpElements(array[rightIndex], child) > 0) {
+            if (rightIndex < heapSize && cmp(array[rightIndex], child) > 0) {
                 child = array[childIndex = rightIndex];
             }
 
-            if (cmpElements(element, child) >= 0) break;
+            if (cmp(element, child) >= 0) break;
 
             // 将子节点存放到index位置
             array[index] = child;

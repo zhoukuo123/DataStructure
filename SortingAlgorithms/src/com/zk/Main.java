@@ -4,10 +4,12 @@ import com.zk.sort.BubbleSort3;
 import com.zk.sort.HeapSort;
 import com.zk.sort.SelectionSort;
 import com.zk.sort.Sort;
+import com.zk.tools.Asserts;
 import com.zk.tools.Integers;
 
 import java.util.Arrays;
 
+@SuppressWarnings({"rawtypes", "unchecked"})
 public class Main {
     public static void main(String[] args) {
         Integer[] array = Integers.random(10000, 1, 20000);
@@ -20,7 +22,9 @@ public class Main {
 
     static void testSorts(Integer[] array, Sort... sorts) {
         for (Sort sort : sorts) {
-            sort.sort(Integers.copy(array));
+            Integer[] newArray = Integers.copy(array);
+            sort.sort(newArray);
+            Asserts.test(Integers.isAscOrder(newArray));
         }
 
         Arrays.sort(sorts);

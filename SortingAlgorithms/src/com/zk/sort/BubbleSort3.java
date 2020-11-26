@@ -1,6 +1,6 @@
 package com.zk.sort;
 
-public class BubbleSort3 extends Sort {
+public class BubbleSort3<E extends Comparable<E>> extends Sort<E> {
     @Override
     protected void sort() {
         for (int end = array.length - 1; end > 0; end--) {
