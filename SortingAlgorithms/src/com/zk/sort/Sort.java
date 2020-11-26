@@ -24,7 +24,13 @@ public abstract class Sort implements Comparable<Sort> {
 
     @Override
     public int compareTo(Sort o) {
-        return (int) (time - o.time);
+        int result = (int) (time - o.time);
+        if (result != 0) return result;
+
+        result = cmpCount - o.cmpCount;
+        if (result != 0) return result;
+
+        return swapCount - o.swapCount;
     }
 
     protected abstract void sort();

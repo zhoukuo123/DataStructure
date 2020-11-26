@@ -12,7 +12,10 @@ public class Main {
     public static void main(String[] args) {
         Integer[] array = Integers.random(10000, 1, 20000);
 
-        testSorts(array, new SelectionSort(), new HeapSort(), new BubbleSort3());
+        testSorts(array,
+                new SelectionSort(),
+                new HeapSort(),
+                new BubbleSort3());
     }
 
     static void testSorts(Integer[] array, Sort... sorts) {
