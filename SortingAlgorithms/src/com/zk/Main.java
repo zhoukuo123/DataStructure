@@ -1,9 +1,6 @@
 package com.zk;
 
-import com.zk.sort.BubbleSort3;
-import com.zk.sort.HeapSort;
-import com.zk.sort.SelectionSort;
-import com.zk.sort.Sort;
+import com.zk.sort.*;
 import com.zk.tools.Asserts;
 import com.zk.tools.Integers;
 
@@ -17,7 +14,8 @@ public class Main {
         testSorts(array,
                 new SelectionSort(),
                 new HeapSort(),
-                new BubbleSort3());
+                new BubbleSort3(),
+                new InsertionSort());
     }
 
     static void testSorts(Integer[] array, Sort... sorts) {
