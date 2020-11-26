@@ -1,6 +1,6 @@
 package com.zk.sort;
 
-public class InsertionSort<E extends Comparable<E>> extends Sort<E> {
+public class InsertionSort1<E extends Comparable<E>> extends Sort<E> {
     @Override
     protected void sort() {
         for (int begin = 1; begin < array.length; begin++) {

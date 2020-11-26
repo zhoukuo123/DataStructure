@@ -15,7 +15,8 @@ public class Main {
                 new SelectionSort(),
                 new HeapSort(),
                 new BubbleSort3(),
-                new InsertionSort());
+                new InsertionSort1(),
+                new InsertionSort2());
     }
 
     static void testSorts(Integer[] array, Sort... sorts) {
