@@ -1,5 +1,10 @@
 package com.zk.sort;
 
+/**
+ * 把交换转为挪动后的插入排序
+ *
+ * @param <E>
+ */
 public class InsertionSort2<E extends Comparable<E>> extends Sort<E> {
     @Override
     protected void sort() {
