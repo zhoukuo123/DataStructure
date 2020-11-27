@@ -1,6 +1,6 @@
 package com.zk;
 
-import com.zk.sort.Sort;
+import com.zk.sort.*;
 import com.zk.tools.Asserts;
 import com.zk.tools.Integers;
 
@@ -9,20 +9,21 @@ import java.util.Arrays;
 @SuppressWarnings({"rawtypes", "unchecked"})
 public class Main {
     public static void main(String[] args) {
-        int[] array = {2, 4, 6, 8, 10};
-        Asserts.test(BinarySearch.indexOf(array, 4) == 1);
-        Asserts.test(BinarySearch.indexOf(array, 2) == 0);
-        Asserts.test(BinarySearch.indexOf(array, 10) == 4);
-        Asserts.test(BinarySearch.indexOf(array, 56) == -1);
+//        int[] array = {2, 4, 6, 8, 10};
+//        Asserts.test(BinarySearch.indexOf(array, 4) == 1);
+//        Asserts.test(BinarySearch.indexOf(array, 2) == 0);
+//        Asserts.test(BinarySearch.indexOf(array, 10) == 4);
+//        Asserts.test(BinarySearch.indexOf(array, 56) == -1);
 
-//        Integer[] array = Integers.random(10000, 1, 20000);
-//
-//        testSorts(array,
-//                new SelectionSort(),
-//                new HeapSort(),
-//                new BubbleSort3(),
-//                new InsertionSort1(),
-//                new InsertionSort2());
+        Integer[] array = Integers.random(10000, 1, 20000);
+
+        testSorts(array,
+                new SelectionSort(),
+                new HeapSort(),
+                new BubbleSort3(),
+                new InsertionSort1(),
+                new InsertionSort2(),
+                new InsertionSort3());
     }
 
     static void testSorts(Integer[] array, Sort... sorts) {
