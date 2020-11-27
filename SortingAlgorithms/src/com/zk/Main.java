@@ -23,6 +23,7 @@ public class Main {
                 new BubbleSort3(),
                 new InsertionSort1(),
                 new InsertionSort2(),
+                new MergeSort(),
                 new InsertionSort3());
     }
 
