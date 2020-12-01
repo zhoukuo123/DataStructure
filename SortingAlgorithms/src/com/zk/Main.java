@@ -1,6 +1,9 @@
 package com.zk;
 
-import com.zk.sort.*;
+import com.zk.sort.HeapSort;
+import com.zk.sort.MergeSort;
+import com.zk.sort.QuickSort;
+import com.zk.sort.Sort;
 import com.zk.tools.Asserts;
 import com.zk.tools.Integers;
 
@@ -15,16 +18,18 @@ public class Main {
 //        Asserts.test(BinarySearch.indexOf(array, 10) == 4);
 //        Asserts.test(BinarySearch.indexOf(array, 56) == -1);
 
-        Integer[] array = Integers.random(10000, 1, 20000);
+        Integer[] array = Integers.random(50000, 1, 50000);
 
         testSorts(array,
-                new SelectionSort(),
+//                new BubbleSort3(),
+//                new SelectionSort(),
+//                new InsertionSort1(),
+//                new InsertionSort2(),
+//                new InsertionSort3(),
                 new HeapSort(),
-                new BubbleSort3(),
-                new InsertionSort1(),
-                new InsertionSort2(),
                 new MergeSort(),
-                new InsertionSort3());
+                new QuickSort()
+        );
     }
 
     static void testSorts(Integer[] array, Sort... sorts) {
