@@ -15,7 +15,7 @@ public class Main {
 //        Asserts.test(BinarySearch.indexOf(array, 10) == 4);
 //        Asserts.test(BinarySearch.indexOf(array, 56) == -1);
 
-        Integer[] array = Integers.random(20000, 1, 10000);
+        Integer[] array = Integers.random(30000, 1, 30000);
 
         testSorts(array,
                 new BubbleSort3(),

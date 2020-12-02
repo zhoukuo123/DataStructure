@@ -14,17 +14,15 @@ public class ShellSort<E extends Comparable<E>> extends Sort<E> {
 
     /**
      * 分成step列进行排序
-     *
-     * @param step
      */
     private void sort(int step) {
         for (int col = 0; col < step; col++) { // 对第col列进行排序
-
-            for (int begin = 1; begin < array.length; begin++) {
+            // col, col+step, col+2*step, col+3*step
+            for (int begin = col + step; begin < array.length; begin += step) {
                 int cur = begin;
-                while (cur > 0 && cmp(cur, cur - 1) < 0) {
-                    swap(cur, cur - 1);
-                    cur--;
+                while (cur > col && cmp(cur, cur - step) < 0) {
+                    swap(cur, cur - step);
+                    cur -= step;
                 }
             }
         }
