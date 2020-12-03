@@ -14,6 +14,7 @@ public class Main {
         testTime(new UnionFind_QU_R(COUNT));
         testTime(new UnionFind_QU_R_PC(COUNT));
         testTime(new UnionFind_QU_R_PS(COUNT));
+        testTime(new UnionFind_QU_R_PH(COUNT));
     }
 
     static void testTime(UnionFind uf) {
