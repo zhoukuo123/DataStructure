@@ -1,4 +1,6 @@
-package com.zk.sort;
+package com.zk.sort.cmp;
+
+import com.zk.sort.Sort;
 
 /**
  * 最普通的插入排序, 不断比较然后交换

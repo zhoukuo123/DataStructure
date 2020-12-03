@@ -1,4 +1,6 @@
-package com.zk.sort;
+package com.zk.sort.cmp;
+
+import com.zk.sort.Sort;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

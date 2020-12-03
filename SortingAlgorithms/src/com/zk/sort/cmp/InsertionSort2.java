@@ -1,4 +1,6 @@
-package com.zk.sort;
+package com.zk.sort.cmp;
+
+import com.zk.sort.Sort;
 
 /**
  * 把交换转为挪动后的插入排序

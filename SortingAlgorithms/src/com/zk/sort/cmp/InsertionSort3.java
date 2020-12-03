@@ -1,4 +1,6 @@
-package com.zk.sort;
+package com.zk.sort.cmp;
+
+import com.zk.sort.Sort;
 
 /**
  * 利用二分搜索进行比较, 而不是一个一个往前比

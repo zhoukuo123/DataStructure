@@ -1,4 +1,6 @@
-package com.zk.sort;
+package com.zk.sort.cmp;
+
+import com.zk.sort.Sort;
 
 @SuppressWarnings("unchecked")
 public class MergeSort<E extends Comparable<E>> extends Sort<E> {

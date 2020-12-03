@@ -1,4 +1,6 @@
-package com.zk.sort;
+package com.zk.sort.cmp;
+
+import com.zk.sort.Sort;
 
 public class BubbleSort2<E extends Comparable<E>> extends Sort<E> {
     @Override

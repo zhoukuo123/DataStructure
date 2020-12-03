@@ -1,4 +1,6 @@
-package com.zk.sort;
+package com.zk.sort.cmp;
+
+import com.zk.sort.Sort;
 
 public class QuickSort<E extends Comparable<E>> extends Sort<E> {
     @Override
