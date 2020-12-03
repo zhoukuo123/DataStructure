@@ -2,7 +2,8 @@ package com.zk;
 
 import com.zk.tools.Asserts;
 import com.zk.tools.Times;
-import com.zk.union.*;
+import com.zk.union.GenericUnionFind;
+import com.zk.union.UnionFind;
 
 public class Main {
     static final int COUNT = 1000000;
@@ -10,11 +11,21 @@ public class Main {
     public static void main(String[] args) {
 //        testTime(new UnionFind_QF(COUNT));
 //        testTime(new UnionFind_QU(COUNT));
-        testTime(new UnionFind_QU_S(COUNT));
-        testTime(new UnionFind_QU_R(COUNT));
-        testTime(new UnionFind_QU_R_PC(COUNT));
-        testTime(new UnionFind_QU_R_PS(COUNT));
-        testTime(new UnionFind_QU_R_PH(COUNT));
+//        testTime(new UnionFind_QU_S(COUNT));
+//        testTime(new UnionFind_QU_R(COUNT));
+//        testTime(new UnionFind_QU_R_PC(COUNT));
+//        testTime(new UnionFind_QU_R_PS(COUNT));
+//        testTime(new UnionFind_QU_R_PH(COUNT));
+
+        GenericUnionFind<Student> uf = new GenericUnionFind<>();
+        Student stu1 = new Student(10, "jack");
+        Student stu2 = new Student(10, "rose");
+
+        uf.makeSet(stu1);
+        uf.makeSet(stu2);
+
+        uf.union(stu1, stu2);
+        uf.isSame(stu1, stu2);
     }
 
     static void testTime(UnionFind uf) {
