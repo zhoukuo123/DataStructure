@@ -44,4 +44,33 @@ public class RadixSort extends Sort<Integer> {
             array[i] = newArray[i];
         }
     }
+
+    /**
+     * 基数排序的另一种思路, 空间复杂度: O(kn + k), 时间复杂度: O(dn), k是进制
+     */
+    protected void sort2() {
+        int max = array[0]; // 最大值
+        for (int i = 1; i < array.length; i++) {
+            if (array[i] > max) {
+                max = array[i];
+            }
+        }
+
+        int[][] buckets = new int[10][array.length];
+        // 每个桶的元素数量
+        int[] bucketSizes = new int[buckets.length];
+        for (int divider = 1; divider <= max; divider *= 10) {
+            for (int i = 0; i < array.length; i++) {
+                int no = array[i] / divider % 10;
+                buckets[no][bucketSizes[no]++] = array[i];
+            }
+            int index = 0;
+            for (int i = 0; i < buckets.length; i++) {
+                for (int j = 0; j < bucketSizes[i]; j++) {
+                    array[index++] = buckets[i][j];
+                }
+                bucketSizes[i] = 0;
+            }
+        }
+    }
 }
