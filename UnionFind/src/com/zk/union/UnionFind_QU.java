@@ -8,6 +8,9 @@ public class UnionFind_QU extends UnionFind {
         super(capacity);
     }
 
+    /**
+     * 通过parent不断向上找, 直到找到根节点
+     */
     @Override
     public int find(int v) {
         rangeCheck(v);
@@ -17,6 +20,9 @@ public class UnionFind_QU extends UnionFind {
         return v;
     }
 
+    /**
+     * 将v1的根节点嫁接到v2的根节点上
+     */
     @Override
     public void union(int v1, int v2) {
         int p1 = find(v1);

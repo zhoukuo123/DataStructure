@@ -8,11 +8,17 @@ public class UnionFind_QF extends UnionFind {
         super(capacity);
     }
 
+    /**
+     * 父节点就是根节点
+     */
     public int find(int v) {
         rangeCheck(v);
         return parents[v];
     }
 
+    /**
+     * 将v1所在集合的所有元素都嫁接到v2的父节点上
+     */
     public void union(int v1, int v2) {
         int p1 = find(v1);
         int p2 = find(v2);
