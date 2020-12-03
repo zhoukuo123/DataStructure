@@ -15,9 +15,6 @@ public class UnionFind_QU_S extends UnionFind_QU {
         }
     }
 
-    /**
-     * 将v1的根节点嫁接到v2的根节点上
-     */
     @Override
     public void union(int v1, int v2) {
         int p1 = find(v1);

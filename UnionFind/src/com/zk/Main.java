@@ -2,22 +2,21 @@ package com.zk;
 
 import com.zk.tools.Asserts;
 import com.zk.tools.Times;
-import com.zk.union.UnionFind;
-import com.zk.union.UnionFind_QF;
-import com.zk.union.UnionFind_QU;
-import com.zk.union.UnionFind_QU_S;
+import com.zk.union.*;
 
 public class Main {
-    static final int COUNT = 500000;
+    static final int COUNT = 1000000;
 
     public static void main(String[] args) {
         test(new UnionFind_QF(12));
         test(new UnionFind_QU(12));
         test(new UnionFind_QU_S(12));
+        test(new UnionFind_QU_R(12));
 
 //        testTime(new UnionFind_QF(COUNT));
 //        testTime(new UnionFind_QU(COUNT));
         testTime(new UnionFind_QU_S(COUNT));
+        testTime(new UnionFind_QU_R(COUNT));
     }
 
     static void test(UnionFind uf) {
@@ -42,7 +41,7 @@ public class Main {
 
     static void testTime(UnionFind uf) {
         Times.test(uf.getClass().getSimpleName(), () -> {
-            for (int i = 0; i < 100000; i++) {
+            for (int i = 0; i < COUNT; i++) {
                 uf.union((int) (Math.random() * COUNT),
                         (int) (Math.random() * COUNT));
             }
