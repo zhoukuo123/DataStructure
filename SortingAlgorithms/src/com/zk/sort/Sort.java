@@ -85,7 +85,8 @@ public abstract class Sort<E extends Comparable<E>> implements Comparable<Sort<E
     }
 
     private boolean isStable() {
-        if (this instanceof CountingSort) return false;
+        if (this instanceof RadixSort) return true;
+        if (this instanceof CountingSort) return true;
         if (this instanceof ShellSort) return false;
         Student[] students = new Student[20];
         for (int i = 0; i < students.length; i++) {

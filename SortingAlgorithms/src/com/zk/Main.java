@@ -1,6 +1,7 @@
 package com.zk;
 
 import com.zk.sort.CountingSort;
+import com.zk.sort.RadixSort;
 import com.zk.sort.Sort;
 import com.zk.sort.cmp.HeapSort;
 import com.zk.sort.cmp.MergeSort;
@@ -32,7 +33,8 @@ public class Main {
                 new MergeSort(),
                 new QuickSort(),
                 new ShellSort(),
-                new CountingSort()
+                new CountingSort(),
+                new RadixSort()
         );
     }
 

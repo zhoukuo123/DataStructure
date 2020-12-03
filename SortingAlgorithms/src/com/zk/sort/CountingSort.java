@@ -97,14 +97,18 @@ public class CountingSort extends Sort<Integer> {
         }
 
         // 从后往前遍历元素, 将它放到有序数组中的合适位置
-        int[] newArray = new int[persons.length];
+        Person[] newArray = new Person[persons.length];
         for (int i = persons.length - 1; i >= 0; i--) {
-            newArray[--counts[persons[i] - min]] = persons[i];
+            newArray[--counts[persons[i].age - min]] = persons[i];
         }
 
         // 将有序数组赋值到array
         for (int i = 0; i < newArray.length; i++) {
-            persons[i].age = newArray[i];
+            persons[i] = newArray[i];
+        }
+
+        for (int i = 0; i < persons.length; i++) {
+            System.out.println(persons[i]);
         }
     }
 
