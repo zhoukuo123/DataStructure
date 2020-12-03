@@ -1,7 +1,7 @@
 package com.zk.union;
 
-public class UnionFind {
-    private int[] parents;
+public abstract class UnionFind {
+    protected int[] parents;
 
     public UnionFind(int capacity) {
         if (capacity < 0) {
@@ -16,22 +16,12 @@ public class UnionFind {
     /**
      * 查找v所属的集合 (根节点)
      */
-    public int find(int v) {
-        rangeCheck(v);
-        return parents[v];
-    }
+    public abstract int find(int v);
 
-    public void union(int v1, int v2) {
-        int p1 = find(v1);
-        int p2 = find(v2);
-        if (p1 == p2) return;
-
-        for (int i = 0; i < parents.length; i++) {
-            if (parents[i] == p1) {
-                parents[i] = p2;
-            }
-        }
-    }
+    /**
+     * 合并v1, v2所在的集合
+     */
+    public abstract void union(int v1, int v2);
 
     /**
      * 检查v1, v2是否属于同一个集合
@@ -40,7 +30,7 @@ public class UnionFind {
         return find(v1) == find(v2);
     }
 
-    private void rangeCheck(int v) {
+    protected void rangeCheck(int v) {
         if (v < 0 || v >= parents.length) {
             throw new IllegalArgumentException("v is out of bounds");
         }
