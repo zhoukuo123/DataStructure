@@ -35,7 +35,7 @@ public class Person implements Comparable<Person> {
      */
     public int hashCode() {
         int hashCode = Integer.hashCode(age);
-        hashCode = hashCode * 31 + Float.hashCode(hashCode);
+        hashCode = hashCode * 31 + Float.hashCode(height);
         hashCode = hashCode * 31 + (name != null ? name.hashCode() : 0);
         return hashCode;
     }
