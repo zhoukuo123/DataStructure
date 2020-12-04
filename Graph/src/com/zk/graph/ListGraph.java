@@ -5,10 +5,25 @@ import java.util.*;
 @SuppressWarnings("unchecked")
 public class ListGraph<V, E> implements Graph<V, E> {
     private Map<V, Vertex<V, E>> vertices = new HashMap<>();
+    private Set<Edge<V, E>> edges = new HashSet<>();
+
+    public void print() {
+        vertices.forEach((V v, Vertex<V, E> vertex) -> {
+            System.out.println(v);
+            System.out.println("out----------------");
+            System.out.println(vertex.outEdges);
+            System.out.println("in-----------------");
+            System.out.println(vertex.inEdges);
+        });
+
+        edges.forEach((Edge<V, E> edge) -> {
+            System.out.println(edge);
+        });
+    }
 
     @Override
     public int edgesSize() {
-        return 0;
+        return edges.size();
     }
 
     @Override
@@ -27,6 +42,9 @@ public class ListGraph<V, E> implements Graph<V, E> {
         addEdge(from, to, null);
     }
 
+    /**
+     * 添加边, 如果边的顶点不存在, 那就创建顶点, 然后再添加边
+     */
     @Override
     public void addEdge(V from, V to, E weight) {
         Vertex<V, E> fromVertex = vertices.get(from);
@@ -42,9 +60,16 @@ public class ListGraph<V, E> implements Graph<V, E> {
         }
 
         Edge<V, E> edge = new Edge<>(fromVertex, toVertex);
-        if (fromVertex.outEdges.contains(edge)) {
+        edge.weight = weight;
 
+        if (fromVertex.outEdges.remove(edge)) {
+            toVertex.inEdges.remove(edge);
+            edges.remove(edge);
         }
+
+        fromVertex.outEdges.add(edge);
+        toVertex.inEdges.add(edge);
+        edges.add(edge);
     }
 
     @Override
@@ -76,6 +101,13 @@ public class ListGraph<V, E> implements Graph<V, E> {
         public int hashCode() {
             return value == null ? 0 : value.hashCode();
         }
+
+        @Override
+        public String toString() {
+            return "Vertex{" +
+                    "value=" + value +
+                    '}';
+        }
     }
 
     private static class Edge<V, E> {
@@ -88,12 +120,6 @@ public class ListGraph<V, E> implements Graph<V, E> {
             this.to = to;
         }
 
-        public Edge(Vertex<V, E> form, Vertex<V, E> to, E weight) {
-            this.form = form;
-            this.to = to;
-            this.weight = weight;
-        }
-
         @Override
         public boolean equals(Object o) {
             Edge<V, E> edge = (Edge<V, E>) o;
@@ -104,6 +130,15 @@ public class ListGraph<V, E> implements Graph<V, E> {
         @Override
         public int hashCode() {
             return form.hashCode() * 31 + to.hashCode();
+        }
+
+        @Override
+        public String toString() {
+            return "Edge{" +
+                    "form=" + form +
+                    ", to=" + to +
+                    ", weight=" + weight +
+                    '}';
         }
     }
 }
