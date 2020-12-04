@@ -4,8 +4,8 @@ import java.util.*;
 
 @SuppressWarnings("unchecked")
 public class ListGraph<V, E> implements Graph<V, E> {
-    private Map<V, Vertex<V, E>> vertices = new HashMap<>();
-    private Set<Edge<V, E>> edges = new HashSet<>();
+    private Map<V, Vertex<V, E>> vertices = new HashMap<>(); // 保存所有的顶点
+    private Set<Edge<V, E>> edges = new HashSet<>(); // 保存所有的边
 
     public void print() {
         vertices.forEach((V v, Vertex<V, E> vertex) -> {
@@ -47,6 +47,7 @@ public class ListGraph<V, E> implements Graph<V, E> {
      */
     @Override
     public void addEdge(V from, V to, E weight) {
+        // 判断边的顶点是否存在, 如果不存在则创建
         Vertex<V, E> fromVertex = vertices.get(from);
         if (fromVertex == null) {
             fromVertex = new Vertex<>(from);
@@ -59,6 +60,7 @@ public class ListGraph<V, E> implements Graph<V, E> {
             vertices.put(to, toVertex);
         }
 
+        // 判断边是否存在, 如果存在则删除边, 然后添加具有新权值的边
         Edge<V, E> edge = new Edge<>(fromVertex, toVertex);
         edge.weight = weight;
 
@@ -73,13 +75,42 @@ public class ListGraph<V, E> implements Graph<V, E> {
     }
 
     @Override
-    public void removeVertex(V v) {
+    public void removeEdge(V from, V to) {
+        // 判断顶点是否存在
+        Vertex<V, E> fromVertex = vertices.get(from);
+        if (fromVertex == null) return;
 
+        Vertex<V, E> toVertex = vertices.get(to);
+        if (toVertex == null) return;
+
+        // 判断顶点之间的边是否存在, 如果存在则删除边
+        Edge<V, E> edge = new Edge<>(fromVertex, toVertex);
+        if (fromVertex.outEdges.remove(edge)) {
+            toVertex.inEdges.remove(edge);
+            edges.remove(edge);
+        }
     }
 
     @Override
-    public void removeEdge(V from, V to) {
+    public void removeVertex(V v) {
+        Vertex<V, E> vertex = vertices.remove(v);
+        if (vertex == null) return;
 
+        for (Iterator<Edge<V, E>> iterator = vertex.outEdges.iterator(); iterator.hasNext(); ) {
+            Edge<V, E> edge = iterator.next();
+            edge.to.inEdges.remove(edge);
+            // 将当前遍历到的元素edge从集合vertex.outEdges中删掉
+            iterator.remove();
+            edges.remove(edge);
+        }
+
+        for (Iterator<Edge<V, E>> iterator = vertex.inEdges.iterator(); iterator.hasNext(); ) {
+            Edge<V, E> edge = iterator.next();
+            edge.form.outEdges.remove(edge);
+            // 将当前遍历到的元素edge从集合vertex.inEdges中删掉
+            iterator.remove();
+            edges.remove(edge);
+        }
     }
 
     private static class Vertex<V, E> {

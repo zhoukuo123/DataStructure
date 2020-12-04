@@ -12,6 +12,9 @@ public class Main {
         graph.addEdge("V3", "V4", 1);
         graph.addEdge("V0", "V4", 6);
 
+//        graph.removeEdge("V0", "V4");
+        graph.removeVertex("V0");
+
         graph.print();
     }
 }
