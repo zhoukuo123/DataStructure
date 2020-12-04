@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * 泛型的并查集, 用于自定义类型
+ */
 public class GenericUnionFind<V> {
     private Map<V, Node<V>> nodes = new HashMap<>();
 
@@ -31,11 +34,23 @@ public class GenericUnionFind<V> {
     }
 
     public void union(V v1, V v2) {
+        Node<V> p1 = findNode(v1);
+        Node<V> p2 = findNode(v2);
+        if (p1 == null || p2 == null) return;
+        if (Objects.equals(p1.value, p2.value)) return;
 
+        if (p1.rank < p2.rank) {
+            p1.parent = p2;
+        } else if (p1.rank > p2.rank) {
+            p2.parent = p1;
+        } else {
+            p1.parent = p2;
+            p2.rank++;
+        }
     }
 
     public boolean isSame(V v1, V v2) {
-        return false;
+        return Objects.equals(find(v1), find(v2));
     }
 
     private static class Node<V> {
