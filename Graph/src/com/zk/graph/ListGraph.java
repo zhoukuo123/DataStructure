@@ -8,14 +8,17 @@ public class ListGraph<V, E> implements Graph<V, E> {
     private Set<Edge<V, E>> edges = new HashSet<>(); // 保存所有的边
 
     public void print() {
+        System.out.println("[顶点]-------------------------");
         vertices.forEach((V v, Vertex<V, E> vertex) -> {
             System.out.println(v);
+
             System.out.println("out----------------");
             System.out.println(vertex.outEdges);
             System.out.println("in-----------------");
             System.out.println(vertex.inEdges);
         });
 
+        System.out.println("[边]-------------------------");
         edges.forEach((Edge<V, E> edge) -> {
             System.out.println(edge);
         });
@@ -110,6 +113,28 @@ public class ListGraph<V, E> implements Graph<V, E> {
             // 将当前遍历到的元素edge从集合vertex.inEdges中删掉
             iterator.remove();
             edges.remove(edge);
+        }
+    }
+
+    @Override
+    public void bfs(V begin) {
+        Vertex<V, E> beginVertex = vertices.get(begin);
+        if (beginVertex == null) return;
+
+        Set<Vertex<V, E>> visitedVertices = new HashSet<>();
+        Queue<Vertex<V, E>> queue = new LinkedList<>();
+        queue.offer(beginVertex);
+        visitedVertices.add(beginVertex);
+
+        while (!queue.isEmpty()) {
+            Vertex<V, E> vertex = queue.poll();
+            System.out.println(vertex.value);
+
+            for (Edge<V, E> edge : vertex.outEdges) {
+                if (visitedVertices.contains(edge.to)) continue;
+                queue.offer(edge.to);
+                visitedVertices.add(edge.to);
+            }
         }
     }
 

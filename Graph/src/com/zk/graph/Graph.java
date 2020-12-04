@@ -14,4 +14,6 @@ public interface Graph<V, E> {
     void removeVertex(V v); // 删除顶点
 
     void removeEdge(V from, V to); // 删除边
+
+    void bfs(V begin);
 }
