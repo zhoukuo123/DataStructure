@@ -1,6 +1,7 @@
 package com.zk.graph;
 
 import java.util.List;
+import java.util.Set;
 
 public interface Graph<V, E> {
     int edgesSize(); // 边的个数
@@ -21,9 +22,23 @@ public interface Graph<V, E> {
 
     void dfs(V begin, VertexVisitor<V> visitor);
 
+    Set<EdgeInfo<V, E>> mst();
+
     List<V> topologicalSort();
 
     interface VertexVisitor<V> {
         boolean visit(V v);
+    }
+
+    class EdgeInfo<V, E> {
+        V form;
+        V to;
+        E weight;
+
+        public EdgeInfo(V form, V to, E weight) {
+            this.form = form;
+            this.to = to;
+            this.weight = weight;
+        }
     }
 }

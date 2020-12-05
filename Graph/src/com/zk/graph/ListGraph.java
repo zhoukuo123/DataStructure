@@ -204,6 +204,12 @@ public class ListGraph<V, E> implements Graph<V, E> {
         return list;
     }
 
+    @Override
+    public Set<EdgeInfo<V, E>> mst() {
+        
+        return null;
+    }
+
 //    @Override
 //    public void bfs(V begin) {
 //        Vertex<V, E> beginVertex = vertices.get(begin);

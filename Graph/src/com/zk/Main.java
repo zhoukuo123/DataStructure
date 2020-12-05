@@ -4,10 +4,17 @@ import com.zk.graph.Graph;
 import com.zk.graph.ListGraph;
 
 import java.util.List;
+import java.util.Set;
 
 public class Main {
     public static void main(String[] args) {
-        testTopo();
+        testMst();
+    }
+
+    static void testMst() {
+        Graph<Object, Double> graph = directedGraph(Data.TOPO);
+        Set<Graph.EdgeInfo<Object, Double>> infos = graph.mst();
+        System.out.println(infos);
     }
 
     static void testTopo() {

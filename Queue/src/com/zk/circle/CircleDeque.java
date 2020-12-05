@@ -105,6 +105,7 @@ public class CircleDeque<E> {
         for (int i = 0; i < size; i++) {
             newElements[i] = elements[index(i)];
         }
+        elements = newElements;
 
         // 重置front
         front = 0;
