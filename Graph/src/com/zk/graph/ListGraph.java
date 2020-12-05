@@ -117,7 +117,8 @@ public class ListGraph<V, E> implements Graph<V, E> {
     }
 
     @Override
-    public void bfs(V begin) {
+    public void bfs(V begin, VertexVisitor<V> visitor) {
+        if (visitor == null) return;
         Vertex<V, E> beginVertex = vertices.get(begin);
         if (beginVertex == null) return;
 
@@ -128,7 +129,7 @@ public class ListGraph<V, E> implements Graph<V, E> {
 
         while (!queue.isEmpty()) {
             Vertex<V, E> vertex = queue.poll();
-            System.out.println(vertex.value);
+            if (visitor.visit(vertex.value)) return;
 
             for (Edge<V, E> edge : vertex.outEdges) {
                 if (visitedVertices.contains(edge.to)) continue;
@@ -139,7 +140,8 @@ public class ListGraph<V, E> implements Graph<V, E> {
     }
 
     @Override
-    public void dfs(V begin) {
+    public void dfs(V begin, VertexVisitor<V> visitor) {
+        if (visitor == null) return;
         Vertex<V, E> beginVertex = vertices.get(begin);
         if (beginVertex == null) return;
 
@@ -149,7 +151,7 @@ public class ListGraph<V, E> implements Graph<V, E> {
         // 先访问起点
         stack.push(beginVertex);
         visitedVertices.add(beginVertex);
-        System.out.println(beginVertex.value);
+        if (visitor.visit(begin)) return;
 
         while (!stack.isEmpty()) {
             Vertex<V, E> vertex = stack.pop();
@@ -161,12 +163,64 @@ public class ListGraph<V, E> implements Graph<V, E> {
                 stack.push(edge.to);
 
                 visitedVertices.add(edge.to);
-                System.out.println(edge.to.value);
+                if (visitor.visit(edge.to.value)) return;
 
                 break;
             }
         }
     }
+
+//    @Override
+//    public void bfs(V begin) {
+//        Vertex<V, E> beginVertex = vertices.get(begin);
+//        if (beginVertex == null) return;
+//
+//        Set<Vertex<V, E>> visitedVertices = new HashSet<>();
+//        Queue<Vertex<V, E>> queue = new LinkedList<>();
+//        queue.offer(beginVertex);
+//        visitedVertices.add(beginVertex);
+//
+//        while (!queue.isEmpty()) {
+//            Vertex<V, E> vertex = queue.poll();
+//            System.out.println(vertex.value);
+//
+//            for (Edge<V, E> edge : vertex.outEdges) {
+//                if (visitedVertices.contains(edge.to)) continue;
+//                queue.offer(edge.to);
+//                visitedVertices.add(edge.to);
+//            }
+//        }
+//    }
+//
+//    @Override
+//    public void dfs(V begin) {
+//        Vertex<V, E> beginVertex = vertices.get(begin);
+//        if (beginVertex == null) return;
+//
+//        Set<Vertex<V, E>> visitedVertices = new HashSet<>();
+//        Stack<Vertex<V, E>> stack = new Stack<>();
+//
+//        // 先访问起点
+//        stack.push(beginVertex);
+//        visitedVertices.add(beginVertex);
+//        System.out.println(beginVertex.value);
+//
+//        while (!stack.isEmpty()) {
+//            Vertex<V, E> vertex = stack.pop();
+//
+//            for (Edge<V, E> edge : vertex.outEdges) {
+//                if (visitedVertices.contains(edge.to)) continue;
+//
+//                stack.push(edge.form);
+//                stack.push(edge.to);
+//
+//                visitedVertices.add(edge.to);
+//                System.out.println(edge.to.value);
+//
+//                break;
+//            }
+//        }
+//    }
 
 //    public void dfs2(V begin) {
 //        Vertex<V, E> beginVertex = vertices.get(begin);

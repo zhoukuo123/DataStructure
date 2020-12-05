@@ -10,12 +10,18 @@ public class Main {
 
     static void testDfs() {
         ListGraph<Object, Double> graph = (ListGraph<Object, Double>) directedGraph(Data.DFS_02);
-        graph.dfs("a");
+        graph.dfs("a", (Object v) -> {
+            System.out.println(v);
+            return false;
+        });
     }
 
     static void testBfs() {
         Graph<Object, Double> graph = directedGraph(Data.BFS_02);
-        graph.bfs(5);
+        graph.bfs(0, (Object v) -> {
+            System.out.println(v);
+            return false;
+        });
     }
 
     static void test() {
