@@ -9,8 +9,8 @@ public class Main {
     }
 
     static void testDfs() {
-        Graph<Object, Double> graph = undirectedGraph(Data.DFS_01);
-        graph.dfs(1);
+        ListGraph<Object, Double> graph = (ListGraph<Object, Double>) directedGraph(Data.DFS_02);
+        graph.dfs("a");
     }
 
     static void testBfs() {
