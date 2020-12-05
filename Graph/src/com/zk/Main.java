@@ -3,13 +3,21 @@ package com.zk;
 import com.zk.graph.Graph;
 import com.zk.graph.ListGraph;
 
+import java.util.List;
+
 public class Main {
     public static void main(String[] args) {
-        testDfs();
+        testTopo();
+    }
+
+    static void testTopo() {
+        Graph<Object, Double> graph = directedGraph(Data.TOPO);
+        List<Object> list = graph.topologicalSort();
+        System.out.println(list);
     }
 
     static void testDfs() {
-        ListGraph<Object, Double> graph = (ListGraph<Object, Double>) directedGraph(Data.DFS_02);
+        Graph<Object, Double> graph = directedGraph(Data.DFS_02);
         graph.dfs("a", (Object v) -> {
             System.out.println(v);
             return false;

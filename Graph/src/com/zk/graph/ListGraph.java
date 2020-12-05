@@ -170,6 +170,40 @@ public class ListGraph<V, E> implements Graph<V, E> {
         }
     }
 
+    @Override
+    public List<V> topologicalSort() {
+        List<V> list = new ArrayList<>();
+        Queue<Vertex<V, E>> queue = new LinkedList<>();
+        Map<Vertex<V, E>, Integer> ins = new HashMap<>();
+
+        // 初始化(将度为0的节点都放入队列)
+        vertices.forEach((V v, Vertex<V, E> vertex) -> {
+            int in = vertex.inEdges.size();
+            if (in == 0) {
+                queue.offer(vertex);
+            } else {
+                ins.put(vertex, in);
+            }
+        });
+
+        while (!queue.isEmpty()) {
+            Vertex<V, E> vertex = queue.poll();
+            // 放入返回结果中
+            list.add(vertex.value);
+
+            for (Edge<V, E> edge : vertex.outEdges) {
+                int toIn = ins.get(edge.to) - 1;
+                if (toIn == 0) {
+                    queue.offer(edge.to);
+                } else {
+                    ins.put(edge.to, toIn);
+                }
+            }
+        }
+
+        return list;
+    }
+
 //    @Override
 //    public void bfs(V begin) {
 //        Vertex<V, E> beginVertex = vertices.get(begin);
