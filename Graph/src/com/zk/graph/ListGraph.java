@@ -138,6 +138,25 @@ public class ListGraph<V, E> implements Graph<V, E> {
         }
     }
 
+    @Override
+    public void dfs(V begin) {
+        Vertex<V, E> beginVertex = vertices.get(begin);
+        if (beginVertex == null) return;
+
+        dfs(beginVertex, new HashSet<>());
+    }
+
+    private void dfs(Vertex<V, E> vertex, Set<Vertex<V, E>> visitedVertices) {
+        System.out.println(vertex.value);
+        visitedVertices.add(vertex);
+
+        for (Edge<V, E> edge : vertex.outEdges) {
+            if (visitedVertices.contains(edge.to)) continue;
+
+            dfs(edge.to, visitedVertices);
+        }
+    }
+
     private static class Vertex<V, E> {
         V value;
         Set<Edge<V, E>> inEdges = new HashSet<>();

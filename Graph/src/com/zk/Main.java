@@ -5,7 +5,17 @@ import com.zk.graph.ListGraph;
 
 public class Main {
     public static void main(String[] args) {
-        test();
+        testDfs();
+    }
+
+    static void testDfs() {
+        Graph<Object, Double> graph = undirectedGraph(Data.DFS_01);
+        graph.dfs(1);
+    }
+
+    static void testBfs() {
+        Graph<Object, Double> graph = directedGraph(Data.BFS_02);
+        graph.bfs(5);
     }
 
     static void test() {
@@ -34,8 +44,6 @@ public class Main {
         graph.addEdge("V2", "V3", 5);
         graph.addEdge("V3", "V4", 1);
         graph.addEdge("V0", "V4", 6);
-
-        graph.bfs("V1");
 
 ////        graph.removeEdge("V0", "V4");
 //        graph.removeVertex("V0");
