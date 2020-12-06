@@ -9,9 +9,16 @@ public class ListGraph<V, E> extends Graph<V, E> {
     private Map<V, Vertex<V, E>> vertices = new HashMap<>(); // 保存所有的顶点
     private Set<Edge<V, E>> edges = new HashSet<>(); // 保存所有的边
     private Comparator<Edge<V, E>> edgeComparator = (Edge<V, E> e1, Edge<V, E> e2) -> {
-
-        return 0;
+        return weightManager.compare(e1.weight, e2.weight);
     };
+
+    public ListGraph() {
+
+    }
+
+    public ListGraph(WeightManager<E> weightManager) {
+        super(weightManager);
+    }
 
     public void print() {
         System.out.println("[顶点]-------------------------");
@@ -226,8 +233,9 @@ public class ListGraph<V, E> extends Graph<V, E> {
         addedVertices.add(vertex);
         MinHeap<Edge<V, E>> heap = new MinHeap<>(vertex.outEdges, edgeComparator);
 
-        int edgeSize = vertices.size() - 1;
-        while (!heap.isEmpty() && edgeInfos.size() < edgeSize) {
+//        int edgeSize = vertices.size() - 1;
+        int verticesSize = vertices.size();
+        while (!heap.isEmpty() && addedVertices.size() < verticesSize) {
             Edge<V, E> edge = heap.remove();
             if (addedVertices.contains(edge.to)) continue;
 

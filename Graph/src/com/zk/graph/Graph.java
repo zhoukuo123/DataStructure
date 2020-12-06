@@ -4,6 +4,16 @@ import java.util.List;
 import java.util.Set;
 
 public abstract class Graph<V, E> {
+    protected WeightManager<E> weightManager;
+
+    public Graph() {
+
+    }
+
+    public Graph(WeightManager<E> weightManager) {
+        this.weightManager = weightManager;
+    }
+
     public abstract int edgesSize(); // 边的个数
 
     public abstract int verticesSize(); // 顶点的个数
@@ -26,8 +36,10 @@ public abstract class Graph<V, E> {
 
     public abstract List<V> topologicalSort();
 
-    public interface weightManager {
+    public interface WeightManager<E> {
+        int compare(E w1, E w2);
 
+        E add(E w1, E w2);
     }
 
     public interface VertexVisitor<V> {
