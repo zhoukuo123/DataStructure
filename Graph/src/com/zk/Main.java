@@ -12,9 +12,11 @@ public class Main {
     }
 
     static void testMst() {
-        Graph<Object, Double> graph = directedGraph(Data.TOPO);
+        Graph<Object, Double> graph = undirectedGraph(Data.MST_01);
         Set<Graph.EdgeInfo<Object, Double>> infos = graph.mst();
-        System.out.println(infos);
+        for (Graph.EdgeInfo<Object, Double> info : infos) {
+            System.out.println(info);
+        }
     }
 
     static void testTopo() {

@@ -1,9 +1,11 @@
 package com.zk.graph;
 
+import com.zk.MinHeap;
+
 import java.util.*;
 
 @SuppressWarnings("unchecked")
-public class ListGraph<V, E> implements Graph<V, E> {
+public class ListGraph<V, E> extends Graph<V, E> {
     private Map<V, Vertex<V, E>> vertices = new HashMap<>(); // 保存所有的顶点
     private Set<Edge<V, E>> edges = new HashSet<>(); // 保存所有的边
     private Comparator<Edge<V, E>> edgeComparator = (Edge<V, E> e1, Edge<V, E> e2) -> {
@@ -218,15 +220,21 @@ public class ListGraph<V, E> implements Graph<V, E> {
         if (!it.hasNext()) return null;
 
         Set<EdgeInfo<V, E>> edgeInfos = new HashSet<>();
+        Set<Vertex<V, E>> addedVertices = new HashSet<>();
+
         Vertex<V, E> vertex = it.next();
+        addedVertices.add(vertex);
+        MinHeap<Edge<V, E>> heap = new MinHeap<>(vertex.outEdges, edgeComparator);
 
-        PriorityQueue<Edge<V, E>> heap = new PriorityQueue<>(new Comparator<Edge<V, E>>() {
-            @Override
-            public int compare(Edge<V, E> o1, Edge<V, E> o2) {
-                return 0;
-            }
-        });
+        int edgeSize = vertices.size() - 1;
+        while (!heap.isEmpty() && edgeInfos.size() < edgeSize) {
+            Edge<V, E> edge = heap.remove();
+            if (addedVertices.contains(edge.to)) continue;
 
+            edgeInfos.add(edge.info());
+            addedVertices.add(edge.to);
+            heap.addAll(edge.to.outEdges);
+        }
 
         return edgeInfos;
     }
@@ -338,9 +346,13 @@ public class ListGraph<V, E> implements Graph<V, E> {
         Vertex<V, E> to;
         E weight;
 
-        public Edge(Vertex<V, E> form, Vertex<V, E> to) {
+        Edge(Vertex<V, E> form, Vertex<V, E> to) {
             this.form = form;
             this.to = to;
+        }
+
+        EdgeInfo<V, E> info() {
+            return new EdgeInfo<>(form.value, to.value, weight);
         }
 
         @Override
