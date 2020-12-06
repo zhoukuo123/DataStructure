@@ -6,6 +6,10 @@ import java.util.*;
 public class ListGraph<V, E> implements Graph<V, E> {
     private Map<V, Vertex<V, E>> vertices = new HashMap<>(); // 保存所有的顶点
     private Set<Edge<V, E>> edges = new HashSet<>(); // 保存所有的边
+    private Comparator<Edge<V, E>> edgeComparator = (Edge<V, E> e1, Edge<V, E> e2) -> {
+
+        return 0;
+    };
 
     public void print() {
         System.out.println("[顶点]-------------------------");
@@ -206,7 +210,28 @@ public class ListGraph<V, E> implements Graph<V, E> {
 
     @Override
     public Set<EdgeInfo<V, E>> mst() {
-        
+        return prim();
+    }
+
+    private Set<EdgeInfo<V, E>> prim() {
+        Iterator<Vertex<V, E>> it = vertices.values().iterator();
+        if (!it.hasNext()) return null;
+
+        Set<EdgeInfo<V, E>> edgeInfos = new HashSet<>();
+        Vertex<V, E> vertex = it.next();
+
+        PriorityQueue<Edge<V, E>> heap = new PriorityQueue<>(new Comparator<Edge<V, E>>() {
+            @Override
+            public int compare(Edge<V, E> o1, Edge<V, E> o2) {
+                return 0;
+            }
+        });
+
+
+        return edgeInfos;
+    }
+
+    private Set<EdgeInfo<V, E>> kruskal() {
         return null;
     }
 
